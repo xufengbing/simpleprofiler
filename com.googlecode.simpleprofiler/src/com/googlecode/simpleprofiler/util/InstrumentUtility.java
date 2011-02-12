@@ -69,9 +69,10 @@ public class InstrumentUtility {
 				iaction = pool.get("org.eclipse.jface.action.IAction");
 			} catch (NotFoundException e1) {
 
+				// do nothing
 				// TODO: must report error if use paras
 				// indicate that
-				throw new RuntimeException(e1);
+				// throw new RuntimeException(e1);
 			}
 			// for each class, do instrument and write back using javasist
 			for (String oneClass : list) {
@@ -181,18 +182,18 @@ public class InstrumentUtility {
 	}
 
 	private static void insertAfter(CtMethod method) {
-		// Do nothing
-		String after1 = "final long used = System.nanoTime()-startMs;";
- 
-//		String after3 = "if(used>10000) {System.out.println(\""+method.getLongName()+"\"+used);}";
-		
-		
-		String after3 = "if(used>10000) {}";
-		
-			 
-		try {
+		try {// Do nothing
+			method.addLocalVariable("used", CtClass.longType);
+			String after1 = "used = System.nanoTime()-startMs;";
+
+			// String after3 =
+			// "if(used>10000) {System.out.println(\""+method.getLongName()+"\"+used);}";
+
+			String after3 = "System.out.println(\""+method.getLongName()+"\"+used);";
+			// String after3 = "if(used>10000) {}";
+
 			method.insertAfter(after1);
- 			method.insertAfter(after3);
+			method.insertAfter(after3);
 		} catch (CannotCompileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
