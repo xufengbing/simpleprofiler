@@ -23,7 +23,7 @@
             visible="true">
          <action
                id="com.googlecode.simpleprofiler.action1"
-               label="TEST ACTIONStest"
+               label="TEST Action"
                style="push"
                toolbarPath="additions">
          </action>

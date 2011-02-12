@@ -27,10 +27,14 @@ import org.eclipse.jdt.launching.JavaRuntime;
 
 public class InstrumentUtility {
 
+	
+	
 	public static final String INSTRUMENTED_INDICATOR_CLASSNAME = "com.googlecode.simpleprofiler.model.InstrumentedIndicator";
 
 	public static void instrumentJavaProject(IJavaProject project)
-			throws CoreException, NotFoundException {
+			throws CoreException {
+	
+
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// TODO: using job mechanism to do clean&build.
 		// use monitor to check if it is ok to continue
@@ -56,20 +60,46 @@ public class InstrumentUtility {
 			String[] classPathEntries = JavaRuntime
 					.computeDefaultRuntimeClassPath(project);
 
-			for (String pathname : classPathEntries) {
-				pool.appendClassPath(pathname);
-			}
 
+
+			for (String pathname : classPathEntries) {
+				try {
+					pool.appendClassPath(pathname);
+				} catch (NotFoundException e) {
+ 					e.printStackTrace();
+				}
+			}
+			CtClass iaction = null;
+			try {
+				iaction = pool.get("org.eclipse.jface.action.IAction");
+			} catch (NotFoundException e1) {
+				
+				//TODO: must report error if use paras 
+				//indicate that 
+				throw new RuntimeException(e1);
+			}
 			// for each class, do instrument and write back using javasist
 			for (String oneClass : list) {
-				CtClass cc = pool.get(oneClass);
+				CtClass cc;
+				try {
+					cc = pool.get(oneClass);
+				} catch (NotFoundException e2) {
+ 					e2.printStackTrace();
+ 					continue;
+				}
 				// only the normal class need to be checked. not for interface
 				// and others
 				if (cc.isInterface() || cc.isAnnotation() || cc.isEnum()) {
 					continue;
 				}
-				// check sub class
-				// cc.subclassOf(cc)
+	 
+				// check sub type
+				try {
+					if (!cc.subtypeOf(iaction)) {
+						continue;
+					}
+				} catch (NotFoundException e1) {
+ 				}
 				// //check if
 				// if(cc.getInterfaces())
 
@@ -205,10 +235,11 @@ public class InstrumentUtility {
 		}
 
 		if (file.isFile()) {
+
 			// internal class don't count
 			// if (fileName.endsWith(".class") && !fileName.contains("$")) {
 
-			if (fileName.endsWith(".class") && !fileName.contains("$")) {
+			if (fileName.endsWith(".class")) {
 				String className = fileName.substring(0, fileName.length() - 6);
 				String fullClassName;
 				if (prefix.equals("")) {
