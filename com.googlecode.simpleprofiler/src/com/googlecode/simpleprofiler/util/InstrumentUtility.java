@@ -186,14 +186,14 @@ public class InstrumentUtility {
 			method.addLocalVariable("used", CtClass.longType);
 			String after1 = "used = System.nanoTime()-startMs;";
 
+			String after3 = "if(used>10000) {System.out.println(\""
+					+ method.getLongName() + "\"+used" + ");}";
+
 			// String after3 =
-			// "if(used>10000) {System.out.println(\""+method.getLongName()+"\"+used);}";
+			// "System.out.println(\""+method.getLongName()+"\"+used);";
 
-			String after3 = "System.out.println(\""+method.getLongName()+"\"+used);";
-			// String after3 = "if(used>10000) {}";
+			method.insertAfter(after1 + after3);
 
-			method.insertAfter(after1);
-			method.insertAfter(after3);
 		} catch (CannotCompileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
