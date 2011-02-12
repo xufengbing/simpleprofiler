@@ -43,6 +43,7 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 						// TODO: Log Error
 						RuntimeException ex = new RuntimeException(javaP
 								.getProject().getName(), e);
+						e.printStackTrace();
 						System.err.println(ex.getMessage());
 
 					}
