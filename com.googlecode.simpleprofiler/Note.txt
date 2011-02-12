@@ -41,7 +41,7 @@ JIP:
 http://jiprof.sourceforge.net/
 related article:
 http://www.ibm.com/developerworks/java/library/j-jip/
-
+http://java.dzone.com/articles/implementing-build-time?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+javalobby%2Ffrontpage+(Javalobby+%2F+Java+Zone)
 
 a good preference that can add enable filter:
 see andrei's AnyEdit tool

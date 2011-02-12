@@ -27,13 +27,10 @@ import org.eclipse.jdt.launching.JavaRuntime;
 
 public class InstrumentUtility {
 
-	
-	
 	public static final String INSTRUMENTED_INDICATOR_CLASSNAME = "com.googlecode.simpleprofiler.model.InstrumentedIndicator";
 
 	public static void instrumentJavaProject(IJavaProject project)
 			throws CoreException {
-	
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		// TODO: using job mechanism to do clean&build.
@@ -60,22 +57,20 @@ public class InstrumentUtility {
 			String[] classPathEntries = JavaRuntime
 					.computeDefaultRuntimeClassPath(project);
 
-
-
 			for (String pathname : classPathEntries) {
 				try {
 					pool.appendClassPath(pathname);
 				} catch (NotFoundException e) {
- 					e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 			CtClass iaction = null;
 			try {
 				iaction = pool.get("org.eclipse.jface.action.IAction");
 			} catch (NotFoundException e1) {
-				
-				//TODO: must report error if use paras 
-				//indicate that 
+
+				// TODO: must report error if use paras
+				// indicate that
 				throw new RuntimeException(e1);
 			}
 			// for each class, do instrument and write back using javasist
@@ -84,24 +79,21 @@ public class InstrumentUtility {
 				try {
 					cc = pool.get(oneClass);
 				} catch (NotFoundException e2) {
- 					e2.printStackTrace();
- 					continue;
+					e2.printStackTrace();
+					continue;
 				}
 				// only the normal class need to be checked. not for interface
 				// and others
 				if (cc.isInterface() || cc.isAnnotation() || cc.isEnum()) {
 					continue;
 				}
-	 
+
 				// check sub type
-				try {
-					if (!cc.subtypeOf(iaction)) {
-						continue;
-					}
-				} catch (NotFoundException e1) {
- 				}
-				// //check if
-				// if(cc.getInterfaces())
+
+				/*
+				 * try { if (!cc.subtypeOf(iaction)) { continue; } } catch
+				 * (NotFoundException e1) { }
+				 */
 
 				// CtClass instrumentedInterface = pool
 				// .get(INSTRUMENTED_INDICATOR_CLASSNAME);
@@ -137,9 +129,9 @@ public class InstrumentUtility {
 					}
 
 					// filter instrument the unpublic method call if specified
-					if (!Modifier.isPublic(modifier)) {
-						continue;
-					}
+					// if (!Modifier.isPublic(modifier)) {
+					// continue;
+					// }
 
 					// instrument method
 					try {
@@ -148,6 +140,7 @@ public class InstrumentUtility {
 						RuntimeException ex = new RuntimeException(
 								"Instrument method failed:"
 										+ method.getLongName(), e);
+						ex.printStackTrace();
 						System.err.println(ex.getMessage());
 					}
 				}
@@ -175,15 +168,36 @@ public class InstrumentUtility {
 		insertAfter(method);
 	}
 
-	private static void insertAfter(CtMethod method) {
-		// Do nothing
+	private static void insertBefore(CtMethod method) {
+		// method.insertAfter("final long endMs = System.nanoTime();" +
+		try {
+			method.addLocalVariable("startMs", CtClass.longType);
+			method.insertBefore("startMs = System.nanoTime();");
+		} catch (CannotCompileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
-	private static void insertBefore(CtMethod method)
-			throws CannotCompileException {
+	private static void insertAfter(CtMethod method) {
+		// Do nothing
+		String after1 = "final long used = System.nanoTime()-startMs;";
+ 
+//		String after3 = "if(used>10000) {System.out.println(\""+method.getLongName()+"\"+used);}";
+		
+		
+		String after3 = "if(used>10000) {}";
+		
+			 
+		try {
+			method.insertAfter(after1);
+ 			method.insertAfter(after3);
+		} catch (CannotCompileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		method.insertBefore("System.out.println(\"" + method.getLongName()
-				+ "\");");
 	}
 
 	public static URLClassLoader getClassLoaderForJavaProject(
