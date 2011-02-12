@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="com.googlecode.simpleprofiler.instrumentjavaproject"
+            objectClass="org.eclipse.jdt.core.IJavaProject">
+         <action
+               class="com.googlecode.simpleprofiler.action.InstrumentProjectAction"
+               enablesFor="*"
+               id="com.googlecode.simpleprofiler.action1"
+               label="Instrument"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="com.googlecode.simpleprofiler.actionSet1"
+            label="label"
+            visible="true">
+         <action
+               id="com.googlecode.simpleprofiler.action1"
+               label="TEST ACTIONStest"
+               style="push"
+               toolbarPath="additions">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>

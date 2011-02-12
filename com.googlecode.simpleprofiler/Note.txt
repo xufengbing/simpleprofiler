@@ -1,0 +1,56 @@
+
+There are many ways to control the output of the profiler.
+1. control the class/method to be instrumented before run the application
+    including a: whether or not to instrument a class or method
+                    filter by class method name, filter by type.
+                    filter by class/method modifiers, like public/private
+              b. how to instrument a class or method
+                    only print out full name? which don't need an extra library 
+                    using more complex instrument way, the class after instrumented depends on special library
+how to: 
+a. have a global property setting file to control
+b. for each java project/plug-in project,a special property file can be configured for this special project  
+    including whether to instrument this project.
+c. java property file format is used.
+    (TO CHECK)must support "#" to uncomment special lines, must support "\" to continue unfinished line 
+
+property defined:
+   
+                     
+2. setting special flag at runtime, which can filter the information to be logged
+
+3. setting filter at display time, to filter/organize the out put.
+
+
+
+
+"com.googlecode.simpleprofiler.filterpublic"
+filter only the public methods
+
+
+
+
+add Jar that can be accessed by all eclipse plug-ins
+-Xbootclasspath/a:<directories and zip/jar files separated by :>
+                      append to end of bootstrap class path
+                      
+                      
+http://www.ibm.com/developerworks/java/library/j-dyn0429/
+http://java.dzone.com/articles/java-profiling-under-covers?page=0,2
+JIP:
+http://jiprof.sourceforge.net/
+related article:
+http://www.ibm.com/developerworks/java/library/j-jip/
+
+
+a good preference that can add enable filter:
+see andrei's AnyEdit tool
+
+how to integrate into run config dialog if needed:
+see Eclemma project
+
+how to instrument jar files for simple 
+see Cobertura project. 
+
+how to use java socket to control the instrumented class's behavior in another JVM:
+see how JIP did it.
