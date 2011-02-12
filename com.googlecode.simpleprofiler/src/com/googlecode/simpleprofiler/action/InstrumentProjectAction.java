@@ -1,3 +1,4 @@
+
 package com.googlecode.simpleprofiler.action;
 
 import org.eclipse.jdt.core.IJavaProject;
