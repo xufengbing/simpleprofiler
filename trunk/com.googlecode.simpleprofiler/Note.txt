@@ -54,3 +54,7 @@ see Cobertura project.
 how to use java socket to control the instrumented class's behavior in another JVM:
 see how JIP did it.
 AT4na2Am3WA6
+
+33333333.
+configure for each project:
+ 
