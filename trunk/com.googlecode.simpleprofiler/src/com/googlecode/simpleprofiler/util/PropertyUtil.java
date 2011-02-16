@@ -1,6 +1,7 @@
 package com.googlecode.simpleprofiler.util;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
@@ -10,10 +11,10 @@ import java.util.Properties;
 public class PropertyUtil {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		//Read properties file.
 		Properties properties = new Properties();
-		try {
+//		try {
 		     properties.load(new FileInputStream("build.property"));
 		       Collection<Object> keys = properties.values();
 		       
@@ -22,8 +23,8 @@ public class PropertyUtil {
 		       }
 		     
 		  
-		} catch (IOException e) {
-		}
+//		} catch (IOException e) {
+//		}
 
 	 
 

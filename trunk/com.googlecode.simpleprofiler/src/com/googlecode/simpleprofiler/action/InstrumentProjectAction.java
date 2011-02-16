@@ -11,7 +11,7 @@ import org.eclipse.ui.IWorkbenchPart;
 
 import com.googlecode.simpleprofiler.util.InstrumentUtility;
 import com.googlecode.simpleprofiler.util.SelectionUtility;
-
+ 
 public class InstrumentProjectAction implements IObjectActionDelegate {
 
 	private Shell shell;
@@ -38,7 +38,8 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 			for (IJavaProject javaP : javaPs) {
 				if (javaP != null) {
 					try {
-						InstrumentUtility.instrumentJavaProject(javaP);
+						InstrumentUtility.getProjectConfig(javaP);
+//						InstrumentUtility.instrumentJavaProject(javaP);
 					} catch (Exception e) {
 						// TODO: Log Error
 						RuntimeException ex = new RuntimeException(javaP

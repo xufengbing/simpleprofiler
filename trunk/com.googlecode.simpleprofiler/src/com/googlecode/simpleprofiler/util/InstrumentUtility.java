@@ -1,11 +1,17 @@
 package com.googlecode.simpleprofiler.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Properties;
 import java.security.PrivilegedAction;
 import java.util.List;
 
@@ -29,6 +35,22 @@ public class InstrumentUtility {
 
 	public static final String INSTRUMENTED_INDICATOR_CLASSNAME = "com.googlecode.simpleprofiler.model.InstrumentedIndicator";
 
+	public static void getProjectConfig(IJavaProject project)
+			throws FileNotFoundException, IOException {
+
+		IFile configFile = project.getProject().getFile("sp.config");
+		File file = new File(configFile.getLocationURI());
+
+		Properties properties = new Properties();
+		properties.load(new FileReader(file));
+		Collection<Object> keys = properties.values();
+
+		for (Object o : keys) {
+			System.out.println(o);
+		}
+
+	}
+
 	public static void instrumentJavaProject(IJavaProject project)
 			throws CoreException {
 
@@ -43,6 +65,7 @@ public class InstrumentUtility {
 		// null);
 
 		IFile outPutDir = root.getFile(project.getOutputLocation());
+
 		File outPutDirFile = new File(outPutDir.getLocationURI());
 		if (outPutDirFile.exists()) {
 			List<String> list = new ArrayList<String>();
