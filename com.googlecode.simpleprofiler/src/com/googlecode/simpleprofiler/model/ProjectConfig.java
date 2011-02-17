@@ -1,13 +1,11 @@
 package com.googlecode.simpleprofiler.model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.resources.IFile;
@@ -17,12 +15,16 @@ import com.googlecode.simpleprofiler.util.Constant;
 
 public class ProjectConfig {
 	private boolean projectConfigUsed;
-	private Pattern classNameInclude;
-	private Pattern classNameExclude;
-	private Pattern methodNameInclude;
-	private Pattern methodNameExclude;
+	private List<String> classNameInclude;
+	private List<String> classNameExclude;
+	private List<String> methodNameInclude;
+	private List<String> methodNameExclude;
 
 	public ProjectConfig(IJavaProject project) {
+		this.classNameInclude = new ArrayList<String>();
+		this.classNameExclude = new ArrayList<String>();
+		this.methodNameInclude = new ArrayList<String>();
+		this.methodNameExclude = new ArrayList<String>();
 
 		Properties properties = new Properties();
 		try {
@@ -53,7 +55,6 @@ public class ProjectConfig {
 			}
 		} catch (Exception e) {
 			projectConfigUsed = false;
-
 		}
 
 	}
@@ -62,19 +63,19 @@ public class ProjectConfig {
 		return projectConfigUsed;
 	}
 
-	public Pattern getClassNameInclude() {
+	public List<String> getClassNameInclude() {
 		return classNameInclude;
 	}
 
-	public Pattern getClassNameExclude() {
+	public List<String> getClassNameExclude() {
 		return classNameExclude;
 	}
 
-	public Pattern getMethodNameInclude() {
+	public List<String> getMethodNameInclude() {
 		return methodNameInclude;
 	}
 
-	public Pattern getMethodNameExclude() {
+	public List<String> getMethodNameExclude() {
 		return methodNameExclude;
 	}
 
@@ -82,29 +83,41 @@ public class ProjectConfig {
 
 		String value = properties.getProperty(key);
 		if (value != null) {
-			String trim = value.trim();
-			if (!trim.isEmpty()) {
+			value = value.trim();
+			if (!value.isEmpty()) {
 				// catch the runtime exception to continue
 				try {
-					Pattern pattern = Pattern.compile(trim);
 					if (Constant.CLASS_NAME_EXCLUDE.equals(key)) {
-						classNameExclude = pattern;
+						addContents(this.classNameExclude, value);
 					}
 					if (Constant.CLASS_NAME_INCLUDE.equals(key)) {
-						classNameInclude = pattern;
+						addContents(this.classNameInclude, value);
 					}
 					if (Constant.METHOD_NAME_EXCLUDE.equals(key)) {
-						methodNameExclude = pattern;
+						addContents(this.methodNameExclude, value);
 					}
 
 					if (Constant.METHOD_NAME_INCLUDE.equals(key)) {
-						methodNameInclude = pattern;
+						addContents(this.methodNameInclude, value);
 					}
 				} catch (PatternSyntaxException e) {
-					//DO nothing
+					// DO nothing
 				}
 			}
 
+		}
+
+	}
+
+	private void addContents(List<String> list, String value) {
+		String[] values = value.split(":");
+		// each string should only contain
+		// startsWith, endsWith, contains
+		for (int i = 0; i < values.length; i++) {
+			String tmp = values[i].trim();
+			if (tmp.length() > 0) {
+				list.add(tmp);
+			}
 		}
 
 	}
