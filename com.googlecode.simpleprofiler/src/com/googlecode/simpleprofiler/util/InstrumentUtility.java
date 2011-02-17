@@ -24,6 +24,7 @@ import javassist.NotFoundException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -35,7 +36,7 @@ public class InstrumentUtility {
 
 	public static final String INSTRUMENTED_INDICATOR_CLASSNAME = "com.googlecode.simpleprofiler.model.InstrumentedIndicator";
 
-	public static void getProjectConfig(IJavaProject project)
+	private static void getProjectConfig(IJavaProject project)
 			throws FileNotFoundException, IOException {
 
 		IFile configFile = project.getProject().getFile("sp.config");
@@ -55,14 +56,8 @@ public class InstrumentUtility {
 			throws CoreException {
 
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		// TODO: using job mechanism to do clean&build.
-		// use monitor to check if it is ok to continue
-		// dont' do build now
-		// clean than rebuild project
-		// root.getWorkspace().build(0, monitor)
-		// System.out.println("build project.............");
-		// project.getProject().build(IncrementalProjectBuilder.FULL_BUILD,
-		// null);
+
+		// buildProject(project, root);
 
 		IFile outPutDir = root.getFile(project.getOutputLocation());
 
@@ -183,6 +178,17 @@ public class InstrumentUtility {
 
 		}
 
+	}
+
+	private static void buildProject(IJavaProject project, IWorkspaceRoot root)
+			throws CoreException {
+
+		// TODO: using job mechanism to do clean&build.
+		// use monitor to check if it is ok to continue
+		// dont' do build now
+		// clean than rebuild project
+		root.getWorkspace().build(0, null);
+		project.getProject().build(IncrementalProjectBuilder.FULL_BUILD, null);
 	}
 
 	private static void instrumentMethod(CtMethod method)

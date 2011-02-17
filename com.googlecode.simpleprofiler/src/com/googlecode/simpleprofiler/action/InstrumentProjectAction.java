@@ -38,7 +38,7 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 			for (IJavaProject javaP : javaPs) {
 				if (javaP != null) {
 					try {
-						InstrumentUtility.getProjectConfig(javaP);
+//						InstrumentUtility.getProjectConfig(javaP);
 //						InstrumentUtility.instrumentJavaProject(javaP);
 					} catch (Exception e) {
 						// TODO: Log Error
