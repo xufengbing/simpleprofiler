@@ -1,4 +1,4 @@
-package com.googlecode.simpleprofiler.model;
+package com.googlecode.simpleprofiler.config;
 
 import java.io.File;
 import java.io.FileReader;
