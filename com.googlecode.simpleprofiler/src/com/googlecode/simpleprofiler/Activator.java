@@ -1,5 +1,7 @@
 package com.googlecode.simpleprofiler;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -13,21 +15,20 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-	
+
 	/**
 	 * The constructor
 	 */
 	public Activator() {
-		//DO Nothing
+		// DO Nothing
 	}
 
- 	@Override
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
- 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
@@ -36,11 +37,21 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+
+	public void logInfo(String message) {
+		Activator.getDefault().getLog().log(
+				new Status(IStatus.INFO, PLUGIN_ID, message));
+	}
+
+	public void logError(String message, Throwable t) {
+		Activator.getDefault().getLog().log(
+				new Status(IStatus.ERROR, PLUGIN_ID, message, t));
 	}
 
 }

@@ -30,11 +30,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
 
-public class InstrumentUtility {
+import com.googlecode.simpleprofiler.Activator;
 
-	public static final String INSTRUMENTED_INDICATOR_CLASSNAME = "com.googlecode.simpleprofiler.model.InstrumentedIndicator";
+public class InstrumentUtility {
 
 	private static void getProjectConfig(IJavaProject project)
 			throws FileNotFoundException, IOException {
@@ -52,128 +53,155 @@ public class InstrumentUtility {
 
 	}
 
-	public static void instrumentJavaProject(IJavaProject project)
-			throws CoreException {
+	public static List<String> getAllClassList(File outPutDirFile) {
 
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		List<String> list = new ArrayList<String>();
 
-		// buildProject(project, root);
-
-		IFile outPutDir = root.getFile(project.getOutputLocation());
-
-		File outPutDirFile = new File(outPutDir.getLocationURI());
 		if (outPutDirFile.exists()) {
-			List<String> list = new ArrayList<String>();
+
 			for (File tmpFile : outPutDirFile.listFiles()) {
 				findClasses(list, tmpFile, "");
 			}
+		}
+		return list;
+	}
 
-			// final URLClassLoader classLoader =
-			// getClassLoaderForJavaProject(project);
-			ClassPool pool = new ClassPool(null);
-			pool.appendSystemPath();
-			String[] classPathEntries = JavaRuntime
-					.computeDefaultRuntimeClassPath(project);
-
-			for (String pathname : classPathEntries) {
-				try {
-					pool.appendClassPath(pathname);
-				} catch (NotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-			CtClass iaction = null;
+	public static ClassPool getProjectClassPool(IJavaProject project)
+			throws CoreException {
+		ClassPool pool = new ClassPool(null);
+		pool.appendSystemPath();
+		String[] classPathEntries = JavaRuntime
+				.computeDefaultRuntimeClassPath(project);
+		for (String pathname : classPathEntries) {
 			try {
-				iaction = pool.get("org.eclipse.jface.action.IAction");
-			} catch (NotFoundException e1) {
-
-				// do nothing
-				// TODO: must report error if use paras
-				// indicate that
-				// throw new RuntimeException(e1);
+				pool.appendClassPath(pathname);
+			} catch (NotFoundException e) {
+				Activator.getDefault().logError(
+						"[" + project.getProject().getName() + "]"
+								+ "Path Not Found:" + pathname, e);
 			}
-			// for each class, do instrument and write back using javasist
-			for (String oneClass : list) {
-				CtClass cc;
-				try {
-					cc = pool.get(oneClass);
-				} catch (NotFoundException e2) {
-					e2.printStackTrace();
+		}
+		return pool;
+
+	}
+
+	public static File getOutputDir(IJavaProject project)
+			throws JavaModelException {
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IFile outPutDir = root.getFile(project.getOutputLocation());
+		File outPutDirFile = new File(outPutDir.getLocationURI());
+		return outPutDirFile;
+
+	}
+
+	//	
+	// CtClass iaction = null;
+	// try {
+	// iaction = pool.get("org.eclipse.jface.action.IAction");
+	// } catch (NotFoundException e1) {
+	//
+	// // do nothing
+	// // TODO: must report error if use paras
+	// // indicate that
+	// // throw new RuntimeException(e1);
+	// }
+
+	// check sub type
+
+	// try {
+	// if (!cc.subtypeOf(iaction)) {
+	// continue;
+	// }
+	// } catch (NotFoundException e1) {
+	// }
+	public static void instrumentJavaProject(IJavaProject project)
+			throws NotFoundException, CoreException {
+
+		File outPutDirFile = getOutputDir(project);
+		ClassPool pool = getProjectClassPool(project);
+		List<String> list = getAllClassList(outPutDirFile);
+
+		// for each class, do instrument and write back using javasist
+		for (String oneClass : list) {
+			CtClass cc;
+			try {
+				cc = pool.get(oneClass);
+			} catch (NotFoundException e2) {
+				Activator.getDefault().logError(
+						"Can Not get Class:" + oneClass, e2);
+				continue;
+			}
+			// only the normal class need to be checked. not for interface
+			// and others
+			if (cc.isInterface() || cc.isAnnotation() || cc.isEnum()) {
+				continue;
+			}
+			// TODO: check class if need to be instrumented.
+			// check from configuration object
+			CtClass[] interfaces = cc.getInterfaces();
+			if (interfaces != null && interfaces.length > 0) {
+				boolean isInstrumented = false;
+				for (CtClass tmp : interfaces) {
+					if (tmp.getName().equals(
+							Constant.INSTRUMENTED_INDICATOR_CLASSNAME)) {
+						isInstrumented = true;
+						break;
+					}
+				}
+				if (isInstrumented == true) {
+					// this class has being instrumented before.
 					continue;
 				}
-				// only the normal class need to be checked. not for interface
-				// and others
-				if (cc.isInterface() || cc.isAnnotation() || cc.isEnum()) {
+			}
+
+			CtMethod[] methods = cc.getDeclaredMethods();
+			for (CtMethod method : methods) {
+				// checks if it is abstract or empty
+				if (method.isEmpty()) {
+					continue;
+				}
+				// check if it is native
+				int modifier = method.getModifiers();
+				if (Modifier.isNative(modifier)) {
 					continue;
 				}
 
-				// check sub type
+				// TODO: check if method need to be instrumented
+				// using configuration object
 
-				/*
-				 * try { if (!cc.subtypeOf(iaction)) { continue; } } catch
-				 * (NotFoundException e1) { }
-				 */
-
-				// CtClass instrumentedInterface = pool
-				// .get(INSTRUMENTED_INDICATOR_CLASSNAME);
-				// CtClass[] interfaces = cc.getInterfaces();
-				// if (interfaces != null && interfaces.length > 0) {
-				// boolean isInstrumented = false;
-				// for (CtClass tmp : interfaces) {
-				// if (tmp.getName().equals(
-				// INSTRUMENTED_INDICATOR_CLASSNAME)) {
-				// isInstrumented = true;
-				// break;
-				// }
-				// }
-				// if (isInstrumented == true) {
-				// // this class has being instrumented before.
+				// filter instrument the unpublic method call if specified
+				// if (!Modifier.isPublic(modifier)) {
 				// continue;
 				// }
-				// }
-				// add a special interface to indicate that it is instrumented
-				// if it is not being instrumented before.
-				// cc.addInterface(instrumentedInterface);
-				CtMethod[] methods = cc.getDeclaredMethods();
-				for (CtMethod method : methods) {
-					// check if it is an abstract method
-					// here checks if it is abstract or empty
-					if (method.isEmpty()) {
-						continue;
-					}
-					// check if it is native
-					int modifier = method.getModifiers();
-					if (Modifier.isNative(modifier)) {
-						continue;
-					}
 
-					// filter instrument the unpublic method call if specified
-					// if (!Modifier.isPublic(modifier)) {
-					// continue;
-					// }
-
-					// instrument method
-					try {
-						instrumentMethod(method);
-					} catch (CannotCompileException e) {
-						RuntimeException ex = new RuntimeException(
-								"Instrument method failed:"
-										+ method.getLongName(), e);
-						ex.printStackTrace();
-						System.err.println(ex.getMessage());
-					}
-				}
-				// write back instrumented class files
-
+				// instrument method
 				try {
-					cc.writeFile(outPutDirFile.getAbsolutePath());
-				} catch (Exception e) {
-					RuntimeException ex = new RuntimeException(
-							"Write back class failed:" + cc.getName(), e);
-					System.err.println(ex.getMessage());
-
+					instrumentMethod(method);
+				} catch (CannotCompileException e) {
+					Activator.getDefault().logError(
+							"Can not instrumented method:"
+									+ method.getLongName(), e);
 				}
+			}
 
+			// add a special interface to indicate that it is instrumented
+			// if it is not being instrumented before.
+
+			try {
+				CtClass instrumentedInterface = pool
+						.get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
+				cc.addInterface(instrumentedInterface);
+
+//				cc.addField(new CtField(CtClass.intType, "i", cc),
+//						CtField.Initializer.constant(1));
+
+				// This code adds an int field named "i". The initial value of
+				// this field is 1.
+
+				cc.writeFile(outPutDirFile.getAbsolutePath());
+			} catch (Exception e) {
+				Activator.getDefault().logError(
+						"Can not write to class:" + cc.getName(), e);
 			}
 
 		}
@@ -258,9 +286,15 @@ public class InstrumentUtility {
 	}
 
 	/**
-	 * Recursive method used to find all classes in a given directory and
-	 * subdirs.
+	 * Recursive method used to find all classes in a given directory and<br>
+	 * sub directories
 	 * 
+	 * @param list
+	 *            found full class name string will be added into this list
+	 * @param file
+	 *            internal used to track current file
+	 * @param prefix
+	 *            internal used to track current package name
 	 */
 	private static void findClasses(List<String> list, File file, String prefix) {
 		String fileName = file.getName();
@@ -279,10 +313,8 @@ public class InstrumentUtility {
 		}
 
 		if (file.isFile()) {
-
 			// internal class don't count
 			// if (fileName.endsWith(".class") && !fileName.contains("$")) {
-
 			if (fileName.endsWith(".class")) {
 				String className = fileName.substring(0, fileName.length() - 6);
 				String fullClassName;

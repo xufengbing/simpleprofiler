@@ -15,6 +15,8 @@ import com.googlecode.simpleprofiler.util.Constant;
 
 public class GlobalConfig {
 
+    //TODO: refactor this class to a config factory
+
 	public static boolean useTimeLimit() {
 		return true;
 	}
@@ -46,6 +48,11 @@ public class GlobalConfig {
 
 	public static String[] getType() {
 		return new String[] { "org.eclipse.jface.action.IAction" };
+	}
+
+	public static boolean checkPrivate() {
+
+		return false;
 	}
 
 }
