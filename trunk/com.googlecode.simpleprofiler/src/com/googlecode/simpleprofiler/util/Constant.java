@@ -7,6 +7,7 @@ String CLASS_NAME_INCLUDE="sp.classname.exclude";
 String METHOD_NAME_INCLUDE="sp.methodname.include";
 String METHOD_NAME_EXCLUDE="sp.methodname.exclude";
 String USE_LOCAL="sp.uselocal";
+String INSTRUMENTED_INDICATOR_CLASSNAME = "com.googlecode.simpleprofiler.model.InstrumentedIndicator";
 
 
 }

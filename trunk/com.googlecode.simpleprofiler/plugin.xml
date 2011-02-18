@@ -9,25 +9,11 @@
          <action
                class="com.googlecode.simpleprofiler.action.InstrumentProjectAction"
                enablesFor="*"
-               id="com.googlecode.simpleprofiler.action1"
+               id="com.googlecode.simpleprofiler.instrumentaction"
                label="Instrument"
                menubarPath="additions">
          </action>
       </objectContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="com.googlecode.simpleprofiler.actionSet1"
-            label="label"
-            visible="true">
-         <action
-               id="com.googlecode.simpleprofiler.action1"
-               label="TEST Action"
-               style="push"
-               toolbarPath="additions">
-         </action>
-      </actionSet>
    </extension>
 
 </plugin>
