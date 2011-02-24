@@ -36,6 +36,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
 
 import com.googlecode.simpleprofiler.Activator;
+import com.googlecode.simpleprofiler.model.LogUtility;
 
 public class InstrumentUtility {
 
@@ -190,12 +191,13 @@ public class InstrumentUtility {
 			// if it is not being instrumented before.
 
 			try {
-//				CtClass instrumentedInterface = pool
-//						.get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
-//				cc.addInterface(instrumentedInterface);
+				// CtClass instrumentedInterface = pool
+				// .get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
+				// cc.addInterface(instrumentedInterface);
 
-				 cc.addField(new CtField(CtClass.intType, Constant.INSTRUMENTED_INDICATOR_CLASSNAME, cc),
-				 CtField.Initializer.constant(1));
+				cc.addField(new CtField(CtClass.intType,
+						Constant.INSTRUMENTED_INDICATOR_CLASSNAME, cc),
+						CtField.Initializer.constant(1));
 
 				// This code adds an int field named "i". The initial value of
 				// this field is 1.
@@ -211,15 +213,15 @@ public class InstrumentUtility {
 	}
 
 	public static void buildProject(IJavaProject project) throws CoreException {
-		//build project:
+		// build project:
 		String location = Activator.getDefault().getBundle().getLocation();
-		System.out.println("location:"+location);
+		System.out.println("location:" + location);
 		// TODO: using job mechanism to do clean&build.
 		// use monitor to check if it is ok to continue
 		// dont' do build now
 		// clean than rebuild project
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-//		root.getWorkspace().build(0, null);
+		// root.getWorkspace().build(0, null);
 
 		final boolean[] isDone = new boolean[1];
 		NullProgressMonitor monitor = new NullProgressMonitor() {
@@ -229,15 +231,14 @@ public class InstrumentUtility {
 			}
 
 		};
-		
-		
+
 		project.getProject().build(IncrementalProjectBuilder.CLEAN_BUILD,
 				monitor);
 
 		for (int i = 0; i < 100; i++) {
-			if(!isDone[0]){
-			
-			System.out.println("is done:" + isDone[0]);
+			if (!isDone[0]) {
+
+				System.out.println("is done:" + isDone[0]);
 			}
 		}
 		System.out.println(isDone[0]);
@@ -254,7 +255,12 @@ public class InstrumentUtility {
 		// method.insertAfter("final long endMs = System.nanoTime();" +
 		try {
 			method.addLocalVariable("startMs", CtClass.longType);
-			method.insertBefore("startMs = System.nanoTime();");
+			method.addLocalVariable("startIndex", CtClass.intType);
+			String startMsStat = "startMs = System.nanoTime();";
+			String startIndexStat = "startIndex=LogUtility.getDefault().getIndex();";
+
+			method.insertBefore(startMsStat + startIndexStat);
+
 		} catch (CannotCompileException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -265,15 +271,22 @@ public class InstrumentUtility {
 	private static void insertAfter(CtMethod method) {
 		try {// Do nothing
 			method.addLocalVariable("used", CtClass.longType);
-			String after1 = "used = System.nanoTime()-startMs;";
+			method.addLocalVariable("threadID", CtClass.longType);
+			method.addLocalVariable("endIndex", CtClass.intType);
 
-			String after3 = "if(used>10000) {System.out.println(\""
-					+ method.getLongName() + "\"+used" + ");}";
+			String usedTimeStat = "used = System.nanoTime()-startMs;";
+			String threadIDStat = "threadID = Thread.currentThread().getId();";
+			String endIndexStat = "endIndex=LogUtility.getDefault().getIndex();";
 
-			// String after3 =
-			// "System.out.println(\""+method.getLongName()+"\"+used);";
+			String logStat = "LogUtility.getDefault().addLog("
+					+ method.getLongName()
+					+ ", used, startIndex, endIndex, threadID);";
+			//
+			// String after3 = "if(used>10000) {System.out.println(\""
+			// + method.getLongName() + "\"+used" + ");}";
 
-			method.insertAfter(after1 + after3);
+			method.insertAfter(usedTimeStat + threadIDStat + endIndexStat
+					+ logStat);
 
 		} catch (CannotCompileException e) {
 			// TODO Auto-generated catch block

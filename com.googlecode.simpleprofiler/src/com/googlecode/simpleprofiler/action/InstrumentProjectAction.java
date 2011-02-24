@@ -37,9 +37,9 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 			for (IJavaProject javaP : javaPs) {
 				if (javaP != null) {
 					try {
-//						InstrumentUtility.instrumentJavaProject(javaP);
+ 				InstrumentUtility.instrumentJavaProject(javaP);
 						
-						InstrumentUtility.buildProject(javaP);
+//						InstrumentUtility.buildProject(javaP);
 					} catch (Exception e) {
 						Activator.getDefault().logError(
 								"Error on instrument project:"
