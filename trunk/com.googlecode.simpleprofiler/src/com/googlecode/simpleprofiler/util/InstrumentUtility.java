@@ -18,6 +18,7 @@ import java.util.List;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtField;
 import javassist.CtMethod;
 import javassist.Modifier;
 import javassist.NotFoundException;
@@ -28,6 +29,7 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
@@ -188,12 +190,12 @@ public class InstrumentUtility {
 			// if it is not being instrumented before.
 
 			try {
-				CtClass instrumentedInterface = pool
-						.get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
-				cc.addInterface(instrumentedInterface);
+//				CtClass instrumentedInterface = pool
+//						.get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
+//				cc.addInterface(instrumentedInterface);
 
-//				cc.addField(new CtField(CtClass.intType, "i", cc),
-//						CtField.Initializer.constant(1));
+				 cc.addField(new CtField(CtClass.intType, Constant.INSTRUMENTED_INDICATOR_CLASSNAME, cc),
+				 CtField.Initializer.constant(1));
 
 				// This code adds an int field named "i". The initial value of
 				// this field is 1.
@@ -208,15 +210,37 @@ public class InstrumentUtility {
 
 	}
 
-	private static void buildProject(IJavaProject project, IWorkspaceRoot root)
-			throws CoreException {
-
+	public static void buildProject(IJavaProject project) throws CoreException {
+		//build project:
+		String location = Activator.getDefault().getBundle().getLocation();
+		System.out.println("location:"+location);
 		// TODO: using job mechanism to do clean&build.
 		// use monitor to check if it is ok to continue
 		// dont' do build now
 		// clean than rebuild project
-		root.getWorkspace().build(0, null);
-		project.getProject().build(IncrementalProjectBuilder.FULL_BUILD, null);
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+//		root.getWorkspace().build(0, null);
+
+		final boolean[] isDone = new boolean[1];
+		NullProgressMonitor monitor = new NullProgressMonitor() {
+			@Override
+			public void done() {
+				isDone[0] = true;
+			}
+
+		};
+		
+		
+		project.getProject().build(IncrementalProjectBuilder.CLEAN_BUILD,
+				monitor);
+
+		for (int i = 0; i < 100; i++) {
+			if(!isDone[0]){
+			
+			System.out.println("is done:" + isDone[0]);
+			}
+		}
+		System.out.println(isDone[0]);
 	}
 
 	private static void instrumentMethod(CtMethod method)
