@@ -3,16 +3,18 @@ package com.googlecode.simpleprofiler.model;
 import java.util.*;
 
 public class Methodlog {
+
+	private String fullName;
+	// get from full name when analyze
 	private String className;
-	// with para if needed
 	private String methodName;
+
 	private List<ExecutionLog> list;
 	private int allTime;
 	private int execNum;
 
-	public Methodlog(String className, String methodName) {
-		this.className = className;
-		this.methodName = methodName;
+	public Methodlog(String fullName) {
+		this.fullName = fullName;
 		this.list = new ArrayList<ExecutionLog>();
 	}
 
@@ -62,8 +64,7 @@ public class Methodlog {
 			if (obj instanceof Methodlog) {
 
 				Methodlog m = (Methodlog) obj;
-				if ((m.className.equals(this.className))
-						&& (m.methodName.equals(this.methodName))) {
+				if (m.fullName.equals(this.fullName)) {
 					return true;
 
 				}
@@ -75,7 +76,6 @@ public class Methodlog {
 
 	@Override
 	public int hashCode() {
-		String all = className + ":" + methodName;
-		return all.hashCode();
+		return this.fullName.hashCode();
 	}
 }

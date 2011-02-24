@@ -17,18 +17,23 @@ public class LogUtility {
 		return logUtility;
 	}
 
-	public synchronized static int getIndex() {
+	public synchronized int getIndex() {
 		index = index + 1;
 		return index;
 	}
 
-	public synchronized void addLog(String className, String methodName,
+	public synchronized int getMapSize() {
+	 return map.values().size();
+	}
+	
+	
+	public synchronized void addLog(String fullName,
 			int time, int startIndex, int endIndex, long threadID) {
-		String id = className + ":" + methodName;
-		Methodlog methodlog = map.get(id);
+	 
+		Methodlog methodlog = map.get(fullName);
 		if (methodlog == null) {
-			methodlog = new Methodlog(className, methodName);
-			map.put(id, methodlog);
+			methodlog = new Methodlog(fullName);
+			map.put(fullName, methodlog);
 		}
 		methodlog.addExecutionLog(time, startIndex, endIndex, threadID);
 	}
