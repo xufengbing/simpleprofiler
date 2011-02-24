@@ -21,7 +21,6 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 	/**
 	 * @see IObjectActionDelegate#setActivePart(IAction, IWorkbenchPart)
 	 */
-	@Override
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
 		shell = targetPart.getSite().getShell();
 	}
@@ -29,7 +28,6 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 	/**
 	 * 
 	 */
-	@Override
 	public void run(IAction action) {
 		// only instrument the first now
 		if (this.sel != null) {
@@ -56,7 +54,6 @@ public class InstrumentProjectAction implements IObjectActionDelegate {
 				"New Action was executed.");
 	}
 
-	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
 		this.sel = selection;
 	}

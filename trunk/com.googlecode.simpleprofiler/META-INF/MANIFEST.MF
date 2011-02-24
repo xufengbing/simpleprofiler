@@ -12,5 +12,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.launching
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: simpleProfiler.jar,
+Bundle-ClassPath: com.googlecode.simpleprofiler.model.jar,
+ simpleProfiler.jar,
  lib/javassist_3.14.0.jar
