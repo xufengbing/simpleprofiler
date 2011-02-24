@@ -27,7 +27,6 @@ public class PerformanceCheck {
 
 		Runnable a = new Runnable() {
 
-			@Override
 			public void run() {
 				for (int i = 0; i < ADDED_RECORD_NUM_PER_THREAD; i++) {
 					PerformanceCheck.v.add(ADDED_STRING_CONSTANT + i);

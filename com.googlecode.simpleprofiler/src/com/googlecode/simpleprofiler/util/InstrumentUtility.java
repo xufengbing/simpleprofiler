@@ -300,7 +300,6 @@ public class InstrumentUtility {
 		final URL[] urls = urlList.toArray(new URL[urlList.size()]);
 		URLClassLoader classLoader = AccessController
 				.doPrivileged(new PrivilegedAction<URLClassLoader>() {
-					@Override
 					public URLClassLoader run() {
 						return new URLClassLoader(urls, parentClassLoader);
 					}
