@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.AccessController;
@@ -31,10 +32,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.adaptor.LocationManager;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
-
+import org.eclipse.osgi.service.datalocation.Location;
 import com.googlecode.simpleprofiler.Activator;
 import com.googlecode.simpleprofiler.model.LogUtility;
 
@@ -84,7 +86,47 @@ public class InstrumentUtility {
 								+ "Path Not Found:" + pathname, e);
 			}
 		}
+
+		String bundleLocation = Activator.getDefault().getBundle()
+				.getLocation();
+		String prefix = "reference:file:";
+		if (bundleLocation.startsWith(prefix)) {
+			bundleLocation = bundleLocation.substring(prefix.length());
+			if (bundleLocation.startsWith("/")) {
+				System.out.println(bundleLocation);
+
+			} else {
+				Location a;
+			}
+		}
 		return pool;
+
+	}
+
+	public static void printBundleLocation() throws URISyntaxException {
+		String bundleLocation = Activator.getDefault().getBundle()
+				.getLocation();
+		Activator.getDefault().logInfo(bundleLocation);
+
+		String prefix = "reference:file:";
+
+		Location location = LocationManager.getEclipseHomeLocation();
+		File homeLocation = new File(location.getURL().toURI());
+
+		if (bundleLocation.startsWith(prefix)) {
+			bundleLocation = bundleLocation.substring(prefix.length());
+			if (bundleLocation.startsWith("/")) {
+				System.out.println(bundleLocation);
+
+			} else {
+
+				bundleLocation = homeLocation.getAbsolutePath()
+						+ bundleLocation;
+			}
+		}
+
+		// reference:file:/D:/svn/simpleprofiler/com.googlecode.simpleprofiler/
+		// reference:file:dropins/com.googlecode.simpleprofiler_1.0.0/
 
 	}
 

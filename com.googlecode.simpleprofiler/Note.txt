@@ -57,4 +57,7 @@ AT4na2Am3WA6
 
 33333333.
 configure for each project:
+
+
+-Xbootclasspath/a:D:/svn/simpleprofiler/com.googlecode.simpleprofiler/plugins/com.googlecode.simpleprofiler_1.0.0/com.googlecode.simpleprofiler.model.jar
  
