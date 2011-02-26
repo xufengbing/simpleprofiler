@@ -1,0 +1,11 @@
+1. create a view to analyze the model.
+	a.create a view only analyze the total time, run time, average run time
+
+
+2. provide more interface in the model to:
+	clear all
+	stop record
+	resume record
+	record detail info or record only normal info
+
+3. on this view 1, provide view action to control whether to log and how to log
