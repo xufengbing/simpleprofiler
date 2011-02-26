@@ -18,18 +18,17 @@ public class LogUtility {
 	}
 
 	public synchronized int getIndex() {
-		System.out.println("getIndex:"+index );
+		System.out.println("getIndex:" + index);
 		index = index + 1;
 		return index;
 	}
 
 	public synchronized int getMapSize() {
-	 return map.values().size();
+		return map.values().size();
 	}
 
-
-	public synchronized void addLog(String fullName,
-			long time, int startIndex, int endIndex, long threadID) {
+	public synchronized void addLog(String fullName, long time, int startIndex,
+			int endIndex, long threadID) {
 
 		Methodlog methodlog = map.get(fullName);
 		if (methodlog == null) {
@@ -38,4 +37,16 @@ public class LogUtility {
 		}
 		methodlog.addExecutionLog(time, startIndex, endIndex, threadID);
 	}
+
+	public synchronized void clearAll() {
+		boolean willLog = LogConfig.getDefault().getLogInfo();
+		if (willLog) {
+			LogConfig.getDefault().setLogInfo(false);
+			this.map.clear();
+			LogConfig.getDefault().setLogInfo(true);
+		} else {
+			this.map.clear();
+		}
+	}
+
 }

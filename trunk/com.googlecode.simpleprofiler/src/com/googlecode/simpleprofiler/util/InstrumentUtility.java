@@ -85,29 +85,28 @@ public class InstrumentUtility {
 								+ "Path Not Found:" + pathname, e);
 			}
 		}
-
-		String bundleLocation = getBundleLocation();
-
-		if (bundleLocation != null) {
-			if (!bundleLocation.endsWith("/")) {
-				bundleLocation += "/";
-			}
-			String modelLocation = bundleLocation
-					+ "com.googlecode.simpleprofiler.model.jar";
-			try {
-				if (new File(modelLocation).exists())
-					pool.appendClassPath(modelLocation);
-			} catch (NotFoundException e) {
-				Activator.getDefault().logError(
-						"[" + project.getProject().getName() + "]"
-								+ "Path Not Found:" + modelLocation, e);
-			}
-		}
+		// changed into put model into boot classpath."classes" dir in jre
+		// String bundleLocation = getBundleLocation();
+		// if (bundleLocation != null) {
+		// if (!bundleLocation.endsWith("/")) {
+		// bundleLocation += "/";
+		// }
+		// String modelLocation = bundleLocation
+		// + "com.googlecode.simpleprofiler.model.jar";
+		// try {
+		// if (new File(modelLocation).exists())
+		// pool.appendClassPath(modelLocation);
+		// } catch (NotFoundException e) {
+		// Activator.getDefault().logError(
+		// "[" + project.getProject().getName() + "]"
+		// + "Path Not Found:" + modelLocation, e);
+		// }
+		// }
 		return pool;
 
 	}
 
-	public static String getBundleLocation() {
+	private static String getBundleLocation() {
 		String bundleLocation = Activator.getDefault().getBundle()
 				.getLocation();
 		Activator.getDefault().logInfo(bundleLocation);
@@ -132,7 +131,6 @@ public class InstrumentUtility {
 		}
 
 		return null;
-
 		// runtime:
 		// reference:file:/D:/svn/simpleprofiler/com.googlecode.simpleprofiler/
 		// in dropin:
@@ -204,7 +202,8 @@ public class InstrumentUtility {
 					}
 				}
 				if (isInstrumented == true) {
-					Activator.getDefault().logInfo("Instumented Alreday:"+oneClass);
+					Activator.getDefault().logInfo(
+							"Instumented Alreday:" + oneClass);
 					continue;
 				}
 			}
@@ -246,7 +245,6 @@ public class InstrumentUtility {
 				CtClass instrumentedInterface = pool
 						.get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
 				cc.addInterface(instrumentedInterface);
-
 
 				// This code adds an int field named "i". The initial value of
 				// this field is 1.
