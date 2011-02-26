@@ -1,0 +1,13 @@
+1. install this plug-in in the development environment and add this into target
+(if the target is not the runtime one.)
+
+later, we need to split this plug-in into 2 , one for instrumentation, one for display
+result. the model can be put in display result one.
+
+2. under the used jre, create a dir named "classes"
+ex:
+C:\Program Files\Java\jdk1.6.0_22\jre\classes
+and put the class file or model into it.
+
+
+

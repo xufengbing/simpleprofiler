@@ -18,6 +18,7 @@ public class LogUtility {
 	}
 
 	public synchronized int getIndex() {
+		System.out.println("getIndex:"+index );
 		index = index + 1;
 		return index;
 	}
@@ -25,11 +26,11 @@ public class LogUtility {
 	public synchronized int getMapSize() {
 	 return map.values().size();
 	}
-	
-	
+
+
 	public synchronized void addLog(String fullName,
-			int time, int startIndex, int endIndex, long threadID) {
-	 
+			long time, int startIndex, int endIndex, long threadID) {
+
 		Methodlog methodlog = map.get(fullName);
 		if (methodlog == null) {
 			methodlog = new Methodlog(fullName);
