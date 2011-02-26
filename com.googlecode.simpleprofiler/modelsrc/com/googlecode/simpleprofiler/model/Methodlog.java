@@ -18,7 +18,7 @@ public class Methodlog {
 		this.list = new ArrayList<ExecutionLog>();
 	}
 
-	public void addExecutionLog(int time, int startIndex, int endIndex,
+	public void addExecutionLog(long time, int startIndex, int endIndex,
 			long threadID) {
 		this.allTime += time;
 		this.execNum += 1;

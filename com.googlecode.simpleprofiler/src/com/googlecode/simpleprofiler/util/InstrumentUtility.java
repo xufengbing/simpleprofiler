@@ -19,7 +19,6 @@ import java.util.List;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
-import javassist.CtField;
 import javassist.CtMethod;
 import javassist.Modifier;
 import javassist.NotFoundException;
@@ -87,45 +86,56 @@ public class InstrumentUtility {
 			}
 		}
 
-		String bundleLocation = Activator.getDefault().getBundle()
-				.getLocation();
-		String prefix = "reference:file:";
-		if (bundleLocation.startsWith(prefix)) {
-			bundleLocation = bundleLocation.substring(prefix.length());
-			if (bundleLocation.startsWith("/")) {
-				System.out.println(bundleLocation);
+		String bundleLocation = getBundleLocation();
 
-			} else {
-				Location a;
+		if (bundleLocation != null) {
+			if (!bundleLocation.endsWith("/")) {
+				bundleLocation += "/";
+			}
+			String modelLocation = bundleLocation
+					+ "com.googlecode.simpleprofiler.model.jar";
+			try {
+				if (new File(modelLocation).exists())
+					pool.appendClassPath(modelLocation);
+			} catch (NotFoundException e) {
+				Activator.getDefault().logError(
+						"[" + project.getProject().getName() + "]"
+								+ "Path Not Found:" + modelLocation, e);
 			}
 		}
 		return pool;
 
 	}
 
-	public static void printBundleLocation() throws URISyntaxException {
+	public static String getBundleLocation() {
 		String bundleLocation = Activator.getDefault().getBundle()
 				.getLocation();
 		Activator.getDefault().logInfo(bundleLocation);
-
 		String prefix = "reference:file:";
-
 		Location location = LocationManager.getEclipseHomeLocation();
-		File homeLocation = new File(location.getURL().toURI());
-
-		if (bundleLocation.startsWith(prefix)) {
-			bundleLocation = bundleLocation.substring(prefix.length());
-			if (bundleLocation.startsWith("/")) {
-				System.out.println(bundleLocation);
-
+		File homeLocation;
+		try {
+			homeLocation = new File(location.getURL().toURI());
+			if (bundleLocation.startsWith(prefix)) {
+				bundleLocation = bundleLocation.substring(prefix.length());
+				if (!bundleLocation.startsWith("/")) {
+					bundleLocation = homeLocation.getAbsolutePath()
+							+ bundleLocation;
+				}
+				return bundleLocation;
 			} else {
-
-				bundleLocation = homeLocation.getAbsolutePath()
-						+ bundleLocation;
+				Activator.getDefault().logError(
+						"bundle location:" + bundleLocation, null);
 			}
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
 
+		return null;
+
+		// runtime:
 		// reference:file:/D:/svn/simpleprofiler/com.googlecode.simpleprofiler/
+		// in dropin:
 		// reference:file:dropins/com.googlecode.simpleprofiler_1.0.0/
 
 	}
@@ -139,7 +149,7 @@ public class InstrumentUtility {
 
 	}
 
-	//	
+	//
 	// CtClass iaction = null;
 	// try {
 	// iaction = pool.get("org.eclipse.jface.action.IAction");
@@ -194,7 +204,7 @@ public class InstrumentUtility {
 					}
 				}
 				if (isInstrumented == true) {
-					// this class has being instrumented before.
+					Activator.getDefault().logInfo("Instumented Alreday:"+oneClass);
 					continue;
 				}
 			}
@@ -233,13 +243,10 @@ public class InstrumentUtility {
 			// if it is not being instrumented before.
 
 			try {
-				// CtClass instrumentedInterface = pool
-				// .get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
-				// cc.addInterface(instrumentedInterface);
+				CtClass instrumentedInterface = pool
+						.get(Constant.INSTRUMENTED_INDICATOR_CLASSNAME);
+				cc.addInterface(instrumentedInterface);
 
-				cc.addField(new CtField(CtClass.intType,
-						Constant.INSTRUMENTED_INDICATOR_CLASSNAME, cc),
-						CtField.Initializer.constant(1));
 
 				// This code adds an int field named "i". The initial value of
 				// this field is 1.
@@ -299,7 +306,7 @@ public class InstrumentUtility {
 			method.addLocalVariable("startMs", CtClass.longType);
 			method.addLocalVariable("startIndex", CtClass.intType);
 			String startMsStat = "startMs = System.nanoTime();";
-			String startIndexStat = "startIndex=LogUtility.getDefault().getIndex();";
+			String startIndexStat = "startIndex=com.googlecode.simpleprofiler.model.LogUtility.getDefault().getIndex();";
 
 			method.insertBefore(startMsStat + startIndexStat);
 
@@ -318,15 +325,17 @@ public class InstrumentUtility {
 
 			String usedTimeStat = "used = System.nanoTime()-startMs;";
 			String threadIDStat = "threadID = Thread.currentThread().getId();";
-			String endIndexStat = "endIndex=LogUtility.getDefault().getIndex();";
+			String endIndexStat = "endIndex=com.googlecode.simpleprofiler.model.LogUtility.getDefault().getIndex();";
 
-			String logStat = "LogUtility.getDefault().addLog("
-					+ method.getLongName()
-					+ ", used, startIndex, endIndex, threadID);";
-			//
+			// String methodName = method.getName();
+			String methodLongName = method.getLongName();
+
+			String logStat = "com.googlecode.simpleprofiler.model.LogUtility.getDefault().addLog(\""
+					+ methodLongName
+					+ "\", used, startIndex, endIndex, threadID);";
+			System.out.println(logStat);
 			// String after3 = "if(used>10000) {System.out.println(\""
 			// + method.getLongName() + "\"+used" + ");}";
-
 			method.insertAfter(usedTimeStat + threadIDStat + endIndexStat
 					+ logStat);
 
@@ -366,7 +375,7 @@ public class InstrumentUtility {
 	/**
 	 * Recursive method used to find all classes in a given directory and<br>
 	 * sub directories
-	 * 
+	 *
 	 * @param list
 	 *            found full class name string will be added into this list
 	 * @param file

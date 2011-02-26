@@ -4,9 +4,9 @@ public class ExecutionLog {
 	private int startIndex;
 	private int endIndex;
 	private long threadID;
-	private int executionTime;
+	private long executionTime;
 
-	public ExecutionLog(int time, int startIndex, int endIndex, long threadID) {
+	public ExecutionLog(long time, int startIndex, int endIndex, long threadID) {
 		this.startIndex = startIndex;
 		this.endIndex = endIndex;
 		this.executionTime = time;
@@ -25,7 +25,7 @@ public class ExecutionLog {
 		return threadID;
 	}
 
-	public int getExecutionTime() {
+	public long getExecutionTime() {
 		return executionTime;
 	}
 
