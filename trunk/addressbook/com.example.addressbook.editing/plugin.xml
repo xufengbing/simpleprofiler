@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.example.addressbook.editing.internal.AddressEditorPart"
+            default="false"
+            icon="icons/user_orange.png"
+            id="com.example.addressbook.editing.Address"
+            name="%Address">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.example.addressbook.editing.internal.OpenAddressEditorHandler"
+            commandId="com.example.addressbook.open">
+         <activeWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="com.example.addressbook.entities.Address">
+                  </instanceof>
+               </iterate>
+            </with>
+         </activeWhen>
+      </handler>
+   </extension>
+
+</plugin>
