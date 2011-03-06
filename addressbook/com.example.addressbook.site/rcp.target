@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.6"?>
+
+<target name="RCP Advanced + p2">
+<locations>
+<location includeAllPlatforms="true" includeMode="slicer" type="InstallableUnit">
+<unit id="org.eclipse.rcp.sdk.id" version="0.0.0"/>
+<unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
+<unit id="org.junit" version="4.8.1.v4_8_1_v20100427-1100"/>
+<unit id="org.junit.source" version="4.8.1.v4_8_1_v20100427-1100"/>
+<unit id="org.hamcrest.core" version="0.0.0"/>
+<unit id="org.hamcrest.core.source" version="0.0.0"/>
+<unit id="org.eclipse.help.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.help.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.ui.forms" version="0.0.0"/>
+<unit id="org.eclipse.riena.core" version="0.0.0"/>
+<unit id="org.apache.commons.codec" version="0.0.0"/>
+<unit id="org.apache.commons.lang" version="0.0.0"/>
+<unit id="org.eclipse.core.variables" version="0.0.0"/>
+<unit id="org.eclipse.core.variables.source" version="0.0.0"/>
+<unit id="org.eclipse.equinox.log" version="0.0.0"/>
+<unit id="org.eclipse.equinox.log.source" version="0.0.0"/>
+<unit id="org.apache.oro" version="0.0.0"/>
+<unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.core.net" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/helios/"/>
+</location>
+<location includeAllPlatforms="true" includeMode="slicer" type="InstallableUnit">
+<unit id="de.ralfebert.rcputils.feature.feature.group" version="2.0.2"/>
+<unit id="de.ralfebert.rcputils.feature.source.feature.group" version="2.0.2"/>
+<repository location="http://www.ralfebert.de/projects/releases/rcputils/"/>
+</location>
+<location includeAllPlatforms="true" includeMode="slicer" type="InstallableUnit">
+<unit id="org.eclipse.rcp.nl_de.feature.group" version="3.5.0"/>
+<unit id="org.apache.commons.io" version="1.4.0.v20081110-1000"/>
+<unit id="org.apache.commons.io.source" version="1.4.0.v20081110-1000"/>
+<unit id="jgravatar" version="1.0.0.201002210556"/>
+<unit id="jgravatar.source" version="1.0.0.201002210556"/>
+<repository location="http://www.ralfebert.de/projects/releases/"/>
+</location>
+<location includeAllPlatforms="true" includeMode="slicer" type="InstallableUnit">
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.0.1.20101106_1831-73ca7af-dev-e36"/>
+<repository location="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site"/>
+</location>
+</locations>
+</target>
