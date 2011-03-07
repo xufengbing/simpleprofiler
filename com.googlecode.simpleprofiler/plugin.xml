@@ -30,5 +30,14 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.googlecode.simpleprofiler.view.SummaryView"
+            id="com.googlecode.simpleprofiler.summaryview"
+            name="name"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>
