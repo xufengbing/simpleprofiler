@@ -5,6 +5,7 @@ import java.util.*;
 public class Methodlog {
 
 	private String fullName;
+
 	// get from full name when analyze
 	private String className;
 	private String methodName;
@@ -16,6 +17,12 @@ public class Methodlog {
 	public Methodlog(String fullName) {
 		this.fullName = fullName;
 		this.list = new ArrayList<ExecutionLog>();
+	}
+
+	public Methodlog(String fullName, int allTime, int execNum) {
+		this.fullName = fullName;
+		this.allTime = allTime;
+		this.execNum = execNum;
 	}
 
 	public void addExecutionLog(long time, int startIndex, int endIndex,
@@ -46,12 +53,22 @@ public class Methodlog {
 		return methodName;
 	}
 
+	public String getFullMethodName() {
+		return fullName;
+	}
+
 	public List<ExecutionLog> getList() {
 		return list;
 	}
 
 	public int getAllTime() {
 		return allTime;
+	}
+
+	public int getMeanTime() {
+		if (execNum != 0)
+			return allTime / execNum;
+		return 0;
 	}
 
 	public int getExecNum() {
