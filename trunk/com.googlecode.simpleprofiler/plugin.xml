@@ -35,7 +35,7 @@
       <view
             class="com.googlecode.simpleprofiler.view.SummaryView"
             id="com.googlecode.simpleprofiler.summaryview"
-            name="name"
+            name="ExampleView"
             restorable="true">
       </view>
    </extension>

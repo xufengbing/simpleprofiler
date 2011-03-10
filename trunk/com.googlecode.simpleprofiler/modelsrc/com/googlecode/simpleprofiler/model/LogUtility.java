@@ -1,5 +1,6 @@
 package com.googlecode.simpleprofiler.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,9 @@ public class LogUtility {
 	}
 
 	public synchronized int getMapSize() {
+		 
 		return map.values().size();
+		
 	}
 
 	public synchronized void addLog(String fullName, long time, int startIndex,
@@ -48,5 +51,10 @@ public class LogUtility {
 			this.map.clear();
 		}
 	}
+	
+	public synchronized Collection<Methodlog> getCollectionValue(){
+		return map.values();
+	}
+	
 
 }
