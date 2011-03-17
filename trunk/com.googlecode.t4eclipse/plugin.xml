@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="item" name="item" schema="schema/item.exsd"/>
+   <extension
+         point="com.googlecode.t4eclipse.item">
+      <Item
+            class="com.googlecode.t4eclipse.ToolPageContent1"
+            id="com.googlecode.t4eclipse.Item1"
+            label="com.googlecode.t4eclipse.Item1">
+      </Item>
+   </extension>
+
+</plugin>
