@@ -1,3 +1,5 @@
+*these two tool exist both on linux and window system
+
 *Getting Started with Java Management Extensions: 
 *http://java.sun.com/developer/technicalArticles/J2SE/jmx.html
 
