@@ -1,3 +1,12 @@
+
+*Getting Started with Java Management Extensions: 
+*http://java.sun.com/developer/technicalArticles/J2SE/jmx.html
+
+*Using Jconsole
+*http://download.oracle.com/javase/6/docs/technotes/guides/management/jconsole.html
+
+
+
 from: http://abtj.blogspot.com/2007/07/how-to-solve-management-agent-is-not.html
 
 
