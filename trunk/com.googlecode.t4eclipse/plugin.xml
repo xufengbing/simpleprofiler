@@ -6,9 +6,41 @@
          point="com.googlecode.t4eclipse.item">
       <Item
             class="com.googlecode.t4eclipse.ToolPageContent1"
-            id="com.googlecode.t4eclipse.Item1"
-            label="com.googlecode.t4eclipse.Item1">
+            id="root1"
+            label="root1">
       </Item>
+      <Item
+            class="com.googlecode.t4eclipse.ToolPageContent1"
+            id="root2"
+            label="root2">
+      </Item>
+      <Item
+            class="com.googlecode.t4eclipse.ToolPageContent1"
+            id="root3"
+            label="root3">
+      </Item>
+      <Item
+            class="com.googlecode.t4eclipse.ToolPageContent1"
+            id="sub1"
+            label="sub1"
+            pid="root1">
+      </Item>
+      <Item
+            class="com.googlecode.t4eclipse.ToolPageContent1"
+            id="sub2"
+            label="sub2"
+            pid="root1">
+      </Item>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="com.googlecode.t4eclipse.view.T4EclipseContentView"
+            id="com.googlecode.t4eclipse.contentview"
+            name="T4Eclipse"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>
