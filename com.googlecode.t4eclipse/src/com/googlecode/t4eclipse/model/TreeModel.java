@@ -26,8 +26,8 @@ public class TreeModel {
 		System.out.println("ID:" + id + " Pid:" + pid + " label:" + label
 				+ " imagepath:" + imagePath + " :pluginID:" + plugInID
 				+ " classID" + classID);
-		System.out.println("parent:"+this.parent); 
-		System.out.println("child:"+this.children.size()); 
+		System.out.println("parent:" + this.parent);
+		System.out.println("child:" + this.children.size());
 
 	}
 
@@ -40,7 +40,7 @@ public class TreeModel {
 		this.plugInID = plugInID;
 		this.classID = classID;
 		this.children = new ArrayList<TreeModel>();
-  
+
 	}
 
 	public void setParent(TreeModel p) {
@@ -64,6 +64,10 @@ public class TreeModel {
 
 	public List<TreeModel> getChildren() {
 		return children;
+	}
+
+	public boolean hasChildren() {
+		return children.size() > 0;
 	}
 
 	public String getId() {
@@ -102,7 +106,31 @@ public class TreeModel {
 	}
 
 	@Override
-	public String toString() {
-		return this.label;
+	public boolean equals(Object obj) {
+		if (obj != null) {
+			if (obj instanceof TreeModel) {
+				TreeModel t = (TreeModel) obj;
+				return t.id.equals(this.id);
+			}
+		}
+
+		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return this.id.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		String ts = "ID:" + id + " \nPid:" + pid + " \nLabel:" + label
+				+ " \nImagepath:" + imagePath + " \nPluginID:" + plugInID
+				+ " \nClassID" + classID;
+		ts += "\nHasParent:" + this.parent != null;
+		ts += "\nChild:" + this.children.size();
+		return ts;
+
+	}
+
 }

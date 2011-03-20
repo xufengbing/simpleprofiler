@@ -6,10 +6,9 @@ import org.eclipse.swt.widgets.Composite;
 
 public interface IToolPageContent {
 
-	void createControl(Composite parent);
+	Composite createControl(Composite parent);
 
 	void fillLocalToolBar(IToolBarManager manager);
 
-	void fillContextMenu(IMenuManager manager);
 
 }
