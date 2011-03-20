@@ -14,7 +14,7 @@ public class T4EclipseTreeContentProvider implements ITreeContentProvider {
 			TreeModel tm = (TreeModel) parentElement;
 			return tm.getChildren().toArray(new TreeModel[0]);
 		}
-		return null;
+		return new Object[0];
 	}
 
 	@Override
@@ -42,7 +42,11 @@ public class T4EclipseTreeContentProvider implements ITreeContentProvider {
 			ContentExtentionProvider contents = (ContentExtentionProvider) inputElement;
 			return contents.getAllRootModel().toArray(new TreeModel[0]);
 		}
+		if (inputElement instanceof TreeModel) {
+			TreeModel tm = (TreeModel) inputElement;
+			return tm.getChildren().toArray(new TreeModel[0]);
 
+		}
 		return null;
 	}
 
