@@ -55,8 +55,9 @@ public class T4EclipseContentView extends ViewPart {
 	private Map<String, Composite> compositeMap;
 	private DrillDownAdapter drillDownAdapter;
 	private Action doubleClickAction;
-	TreeModel treeModel;
-	StackLayout slayout;
+	private TreeModel treeModel;
+	private StackLayout slayout;
+	private Label initialContent;
 
 	public T4EclipseContentView() {
 		this.compositeMap = new HashMap<String, Composite>();
@@ -85,12 +86,10 @@ public class T4EclipseContentView extends ViewPart {
 		stackComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		slayout = new StackLayout();
 		stackComposite.setLayout(slayout);
-		Label label = new Label(stackComposite, SWT.NONE);
-		label.setText("initial content");
-		Label labe2 = new Label(stackComposite, SWT.NONE);
-		labe2.setText("initial content2");
+		initialContent = new Label(stackComposite, SWT.NONE);
+		initialContent.setText("initial content");
 
-		slayout.topControl = labe2;
+		slayout.topControl = initialContent;
 		stackComposite.layout();
 
 		createViewer(treeViewerComposite);
@@ -124,13 +123,18 @@ public class T4EclipseContentView extends ViewPart {
 	}
 
 	protected void showContentInStack(TreeModel model) {
-		Composite composite = this.compositeMap.get(model.getId());
-		if (composite == null) {
-			// not create before
-			composite = createComposite(model);
+		// when no selection, model will be null
+		if (model != null) {
+			Composite composite = this.compositeMap.get(model.getId());
+			if (composite == null) {
+				// not create before
+				composite = createComposite(model);
+				this.compositeMap.put(model.getId(), composite);
+			}
+			slayout.topControl = composite;
+		} else {
+			slayout.topControl = this.initialContent;
 		}
-
-		slayout.topControl = composite;
 		stackComposite.layout();
 	}
 
@@ -142,7 +146,7 @@ public class T4EclipseContentView extends ViewPart {
 			Class s = Class.forName(model.getClassID());
 			IToolPageContent instance = (IToolPageContent) s.newInstance();
 			Composite p = instance.createControl(this.stackComposite);
-			this.compositeMap.put(model.getId(), p);
+
 			return p;
 
 		} catch (Exception e) {
@@ -174,7 +178,11 @@ public class T4EclipseContentView extends ViewPart {
 
 				if (model != T4EclipseContentView.this.treeModel) {
 					T4EclipseContentView.this.treeModel = model;
-					T4EclipseContentView.this.showContentInStack(model);
+					if (model != null) {
+						T4EclipseContentView.this.showContentInStack(model);
+					} else {
+
+					}
 
 				}
 
