@@ -28,10 +28,9 @@ public class ActivePartContent implements IToolPageContent {
 	
 	@Override
 	public Composite createControl(Composite parent) {
-		Composite p=new Composite(parent,SWT.NONE);
-		p.setLayout(new GridLayout());
+ 
 		
-		Composite treeViewerComposite = new Composite(p, SWT.NONE);
+		Composite treeViewerComposite = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
 		layout.horizontalSpacing = 0;
 		layout.verticalSpacing = 0;
@@ -44,7 +43,7 @@ public class ActivePartContent implements IToolPageContent {
 		headText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		createViewer(treeViewerComposite);
 
-		return p;
+		return treeViewerComposite;
  
 	}
 
