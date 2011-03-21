@@ -5,28 +5,23 @@
    <extension
          point="com.googlecode.t4eclipse.item">
       <Item
-            class="com.googlecode.t4eclipse.ToolPageContent1"
+            class="com.googlecode.t4eclipse.extension.model.Demo"
             id="root1"
             label="root1">
       </Item>
       <Item
-            class="com.googlecode.t4eclipse.ToolPageContent1"
+            class="com.googlecode.t4eclipse.extension.model.Demo2"
             id="root2"
             label="root2">
       </Item>
       <Item
-            class="com.googlecode.t4eclipse.ToolPageContent1"
-            id="root3"
-            label="root3">
-      </Item>
-      <Item
-            class="com.googlecode.t4eclipse.ToolPageContent1"
+            class="com.googlecode.t4eclipse.extension.content.activepart.ActivePartContent"
             id="sub1"
             label="sub1"
             pid="root1">
       </Item>
       <Item
-            class="com.googlecode.t4eclipse.ToolPageContent1"
+            class="com.googlecode.t4eclipse.extension.model.Demo2"
             id="sub2"
             label="sub2"
             pid="root1">
