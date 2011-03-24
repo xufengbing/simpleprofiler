@@ -1,0 +1,2 @@
+http://www.ralfebert.de/blog/eclipsercp/rcp_examples/
+https://max-server.myftp.org/trac/mp3m
