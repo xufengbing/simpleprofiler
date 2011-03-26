@@ -1,2 +1,5 @@
 http://www.ralfebert.de/blog/eclipsercp/rcp_examples/
 https://max-server.myftp.org/trac/mp3m
+
+RCP TOolbox:
+http://www.richclientgui.com/detail.php?product_id=1
