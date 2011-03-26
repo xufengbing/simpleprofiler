@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.googlecode.t4eclipse
+Bundle-SymbolicName: com.googlecode.t4eclipse;singleton:=true
+Bundle-Version: 1.2.1
+Bundle-Activator: com.google.code.t4eclipse.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.jdt.ui;resolution:=optional,
+ de.kupzog.ktable;resolution:=optional
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Ben Xu

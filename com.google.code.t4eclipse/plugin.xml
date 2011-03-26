@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension point="org.eclipse.ui.views">
+		<category id="T4Eclipse" name="T4Eclipse"/>
+		<view
+        allowMultiple="false"
+        category="T4Eclipse"
+        class="com.google.code.t4eclipse.tools.view.MainView"
+        icon="icons/t4eclipse16.GIF"
+        id="com.google.code.t4eclipse.tools.view.MainView"
+        name="T4Eclipse Main View"/>
+  <view
+        allowMultiple="false"
+        category="T4Eclipse"
+        class="com.google.code.t4eclipse.tools.view.ActivePartControlView"
+        icon="icons/analysis.bmp"
+        id="com.google.code.t4eclipse.tools.view.ActivePartControlView"
+        name="Active Part Analyzer">
+  </view>
+  <view
+        allowMultiple="false"
+        category="T4Eclipse"
+        class="com.google.code.t4eclipse.tools.view.SytemImageView"
+        icon="icons/systemImageViewIcon.gif"
+        id="com.google.code.t4eclipse.tools.view.SytemImageView"
+        name="System Images">
+  </view>
+  <view
+        allowMultiple="false"
+        category="T4Eclipse"
+        class="com.google.code.t4eclipse.tools.view.MenuAnalyzerView"
+        icon="icons/MenuAnalyzeView.png"
+        id="com.google.code.t4eclipse.tools.view.MenuAnalyzerView"
+        name="Menu Analyzer">
+  </view>
+  <view
+        allowMultiple="false"
+        category="T4Eclipse"
+        class="com.google.code.t4eclipse.tools.view.ToolBarAnalyzerView"
+        icon="icons/ToolBarView.gif"
+        id="com.google.code.t4eclipse.tools.view.ToolBarAnalyzerView"
+        name="ToolBar Analyzer">
+  </view>
+  <view
+        allowMultiple="false"
+        category="T4Eclipse"
+        class="com.google.code.t4eclipse.tools.view.EventAnalyzerView"
+        icon="icons/cpyqual_menu.gif"
+        id="com.google.code.t4eclipse.tools.view.EventAnalyzerView"
+        name="SWT Event Analyzer">
+  </view>
+ 
+	</extension>
+	
+	
+	
+	
+	<extension point="org.eclipse.ui.viewActions">
+ 
+   <viewContribution
+        id="com.google.code.t4eclipse.tools.view.ActivePartControlView.viewaction"
+        targetID="com.google.code.t4eclipse.tools.view.ActivePartControlView">
+     <action
+           class="com.google.code.t4eclipse.tools.action.AnalyzeAllControlAction"
+           icon="icons/class_hi.gif"
+           id="com.google.code.t4eclipse.tools.action.AnalyzeAllControlAction"
+           label="Analyze all eclipse control tree"
+           menubarPath="additions"
+           style="push"
+           toolbarPath="additions">
+     </action>
+ 
+     <action
+           class="com.google.code.t4eclipse.tools.action.ExpandAllAction"
+           icon="icons/expand.gif"
+           id="com.google.code.t4eclipse.tools.action.ExpandAllAction"
+           label="Expand All"
+           menubarPath="additions"
+           style="push"
+           toolbarPath="additions">
+     </action>
+     <action
+           class="com.google.code.t4eclipse.tools.action.ShowLeftSashActioin"
+           icon="icons/showSashIcon.gif"
+           id="com.google.code.t4eclipse.tools.action.ShowLeftSashActioin"
+           label="Show Selection Infomation"
+           menubarPath="additions"
+           state="false"
+           style="toggle"
+           toolbarPath="additions">
+     </action>
+     <action
+           class="com.google.code.t4eclipse.tools.action.AutoSyncActivePartAction"
+           icon="icons/synced.gif"
+           id="com.google.code.t4eclipse.tools.action.AutoSyncActivePartAction"
+           label="Automatic Sync With Active Part"
+           menubarPath="additions"
+           state="false"
+           style="toggle"
+           toolbarPath="additions">
+     </action>
+  </viewContribution>
+  <viewContribution
+        id="com.google.code.t4eclipse.tools.view.MenuAnalyzerView.viewaction"
+        targetID="com.google.code.t4eclipse.tools.view.MenuAnalyzerView">
+     <action
+           class="com.google.code.t4eclipse.tools.action.AnalyzeMainMenuAction"
+           icon="icons/anlyzeSystemMenu.gif"
+           id="com.google.code.t4eclipse.tools.action.AnalyzeMainMenuAction"
+           label="Analyze Eclipse Main Menu"
+           menubarPath="additions"
+           style="push"
+           toolbarPath="additions">
+     </action>
+     <action
+           class="com.google.code.t4eclipse.tools.action.AnalyzeNextMenuAction"
+           icon="icons/AnalyzeNextMenu.gif"
+           id="com.google.code.t4eclipse.tools.action.AnalyzeNextMenuAction"
+           label="Analyze Next Showed Menu In View Or Editor"
+           menubarPath="additions"
+           state="false"
+           style="toggle"
+           toolbarPath="additions">
+     </action>
+  </viewContribution>
+  <viewContribution
+        id="com.google.code.t4eclipse.tools.view.MainView.viewaction"
+        targetID="com.google.code.t4eclipse.tools.view.MainView">
+     <action
+           class="com.google.code.t4eclipse.tools.action.RefreshMainViewAction"
+           icon="icons/refreshinmainview.gif"
+           id="com.google.code.t4eclipse.tools.action.RefreshMainViewAction"
+           label="Refresh All Data"
+           menubarPath="additions"
+           style="push"
+           toolbarPath="additions"
+           tooltip="Refresh All Data">
+     </action>
+  </viewContribution>
+  <viewContribution
+        id="com.google.code.t4eclipse.tools.view.ToolBarAnalyzerView.action"
+        targetID="com.google.code.t4eclipse.tools.view.ToolBarAnalyzerView">
+     <action
+           class="com.google.code.t4eclipse.tools.action.ShowMainToolBarAction"
+           icon="icons/localBar.gif"
+           id="com.google.code.t4eclipse.tools.action.ShowMainToolBarAction"
+           label="analyze eclipse main toolbar "
+           menubarPath="additions"
+           style="push"
+           toolbarPath="additions">
+     </action>
+  </viewContribution>
+	</extension>
+ 	<!--
+	<extension point="org.eclipse.core.runtime.preferences">
+		<initializer class="com.google.code.t4eclipse.tools.prefenence.PreferenceInitializer"/>
+	</extension>
+	-->
+<!--a menu  named T4Eclipse in eclispe main menu-->
+<extension
+         id="com.google.code.tool4eclipse.actions"
+         name="Actions"
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="T4Eclipse Actions"
+            visible="true"
+            id="com.google.code.tool4eclipse.actions">
+         <menu
+               label="&amp;T4Eclipse"
+               id="com.google.code.tool4eclipse.menu">
+            <separator
+                  name="action">
+            </separator>
+            <separator
+                  name="other">
+            </separator>
+            <separator
+                  name="about">
+            </separator>
+         </menu>
+         <menu label="&amp;miscellaneous"
+          	id="miscellaneous"
+          	path="com.google.code.tool4eclipse.menu/other">
+          	<groupMarker name="start"/>
+            
+            <groupMarker
+                  name="errorlog">
+            </groupMarker>
+            <groupMarker name="additions"/>
+         </menu>
+         <action
+               class="com.google.code.t4eclipse.tools.action.MemoryCheckAction"
+               icon="icons/memorycheck.bmp"
+               id="com.google.code.t4eclipse.tools.action.MemoryCheckAction"
+               label="Check Memory Change"
+               menubarPath="com.google.code.tool4eclipse.menu/miscellaneous/mem"
+               state="false"
+               style="toggle"
+               toolbarPath="t4eclipseToolBar1"
+               tooltip="check memory change in eclipse">
+         </action>
+         <action
+               class="com.google.code.t4eclipse.errorlog.action.ShowSharedImageAction"
+               icon="icons/systemImageViewIcon.gif"
+               id="com.google.code.t4eclipse.errorlog.action.ShowSharedImageAction"
+               label="Show All Shared Image"
+               menubarPath="com.google.code.tool4eclipse.menu/miscellaneous/images"
+               style="push"
+               tooltip="show shared image in eclipse ">
+         </action>
+      	
+      	
+      		
+     	 <action
+               class="com.google.code.t4eclipse.errorlog.action.ErrorAction"
+               icon="icons/bug.bmp"
+               id="com.google.code.t4eclipse.errorlog.action.ErrorAction"
+               label="Run Error"
+               menubarPath="com.google.code.tool4eclipse.menu/miscellaneous/errorlog"
+               style="push"
+               tooltip="run an error"/>
+
+               <action
+               class="com.google.code.t4eclipse.errorlog.action.LogErrorAction"
+               icon="icons/error.bmp"
+               id="com.google.code.t4eclipse.errorlog.action.LogErrorAction"
+               label="Block Error"
+               menubarPath="com.google.code.tool4eclipse.menu/miscellaneous/errorlog"
+               state="false"
+               style="toggle"
+               tooltip="block error">
+         </action>
+               <action
+                     class="com.google.code.t4eclipse.tools.action.ShowToolBarAnalyzerAction"
+                     icon="icons/ToolBarView.gif"
+                     id="com.google.code.t4eclipse.tools.action.ShowToolBarAnalyzerAction"
+                     label="ToolBar Analyzer"
+                     menubarPath="com.google.code.tool4eclipse.menu/action"
+                     tooltip="open view to analyze menu in eclipse">
+               </action>
+               <action
+                     class="com.google.code.t4eclipse.tools.action.ShowMenuAnalyzerAction"
+                     icon="icons/MenuAnalyzeView.png"
+                     id="com.google.code.t4eclipse.tools.action.ShowMenuAnalyzerAction"
+                     label="Menu Aanalyzer"
+                     menubarPath="com.google.code.tool4eclipse.menu/action"
+                     tooltip="open view to analyze menu in eclipse">
+               </action>
+         <action
+               class="com.google.code.t4eclipse.tools.action.UpdatePartAction"
+               icon="icons/analysis.bmp"
+               id="com.google.code.t4eclipse.tools.action.UpdatePartAction"
+               label="&amp;Analyze Active Part"
+               menubarPath="com.google.code.tool4eclipse.menu/action"
+               toolbarPath="t4eclipseToolBar1"
+               tooltip="open view to analyze eclipse view/editor">
+         </action>
+
+           <action
+               class="com.google.code.t4eclipse.tools.action.OpenViewAction"
+               icon="icons/t4eclipse16.GIF"
+               id="com.google.code.t4eclipse.tools.action.OpenViewAction"
+               label="&amp;Open/Update T4Eclipse View"
+               menubarPath="com.google.code.tool4eclipse.menu/action"
+               toolbarPath="t4eclipseToolBar1"
+               tooltip="open t4eclipse view "/>
+
+   
+ 
+         <action
+               class="com.google.code.t4eclipse.tools.action.AboutProjectAction"
+               icon="icons/Info.gif"
+               id="com.google.code.t4eclipse.tools.action.AboutProjectAction"
+               label="&amp;About"
+               menubarPath="com.google.code.tool4eclipse.menu/about">
+         </action>
+      </actionSet>
+   </extension>
+   
+   
+  
+  
+  <!-- 
+  <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            id="selectionExample.contribution1">
+         <action
+               label="chmod 664"
+               class="com.google.code.t4eclipse.tools.action.ChmodAction"
+               menubarPath="additions"
+               enablesFor="*"
+               id="selectionExample.newAction">
+         </action>
+      </objectContribution>
+    </extension>
+   -->
+   
+   
+   
+      <extension
+            point="org.eclipse.ui.popupMenus">
+         <objectContribution
+               id="com.google.code.t4eclipse.objectcontribution.controlselection"
+               objectClass="com.google.code.t4eclipse.selection.ControlSelection">
+            <action
+                  class="com.google.code.t4eclipse.tools.action.AnalyzeControlAction"
+                  enablesFor="1"
+                  icon="icons/73.gif"
+                  id="com.google.code.t4eclipse.tools.action.AnalyzeControlAction"
+                  label="Analyze Control"
+                  menubarPath="additions">
+            </action>
+            <action
+                  class="com.google.code.t4eclipse.tools.action.AnalysisMenuAction"
+                  enablesFor="1"
+                  icon="icons/MenuAnalyzeView.png"
+                  id="com.google.code.t4eclipse.tools.action.AnalysisMenuAction"
+                  label="Analyze Menu"
+                  menubarPath="additions">
+               <enablement>
+                  <objectState
+                        name="hasMenu"
+                        value="Y">
+                  </objectState>
+               </enablement>
+            </action>
+            <action
+                  class="com.google.code.t4eclipse.tools.action.OpenControlJavaCLass"
+                  enablesFor="1"
+                  icon="icons/opentype.gif"
+                  id="com.google.code.t4eclipse.tools.action.openControlJavaCLass"
+                  label="Open Class"
+                  menubarPath="additions">
+            </action>
+            <action
+                  class="com.google.code.t4eclipse.tools.action.ChangeVisibilityAction"
+                  enablesFor="1"
+                  icon="icons/hideAndReshow.gif"
+                  id="com.google.code.t4eclipse.tools.action.ChangeVisibilityAction"
+                  label="Hide And Reshow Control"
+                  menubarPath="additions">
+               <enablement>
+                  <objectState
+                        name="isVisible"
+                        value="Y">
+                  </objectState>
+               </enablement>
+            </action>
+         </objectContribution>
+         <objectContribution
+               id="com.google.code.t4eclipse.objectcontribution.menuselection"
+               objectClass="org.eclipse.swt.widgets.MenuItem">
+            <action
+                  class="com.google.code.t4eclipse.tools.action.OpenMenuItemJavaTypeAction"
+                  enablesFor="1"
+                  icon="icons/opentype.gif"
+                  id="com.google.code.t4eclipse.tools.action.OpenMenuItemJavaTypeAction"
+                  label="Open Class"
+                  menubarPath="additions">
+            </action>
+         </objectContribution>
+         <objectContribution
+               id="com.google.code.t4eclipse.objectcontribution.ToolBarselection"
+               objectClass="org.eclipse.swt.widgets.ToolItem">
+            <action
+                  class="com.google.code.t4eclipse.tools.action.OpenToolItemJavaTypeAction"
+                  enablesFor="1"
+                  icon="icons/opentype.gif"
+                  id="com.google.code.t4eclipse.tools.action.OpenToolItemJavaTypeAction"
+                  label="Open Class"
+                  menubarPath="additions">
+            </action>
+         </objectContribution>
+      </extension>
+      <extension
+            id="com.google.code.t4eclpse.preference"
+            name="com.google.code.t4eclpse.preference"
+            point="org.eclipse.ui.preferencePages">
+         <page
+               class="com.google.code.t4eclipse.WorkbenchPreferencePage2"
+               id="com.google.code.t4eclipse.page2"
+               name="name">
+         </page>
+      </extension>
+   
+
+
+</plugin>
