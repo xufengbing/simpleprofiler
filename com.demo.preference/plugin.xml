@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="com.demo.preference.actionSet1"
+            label="test"
+            visible="true">
+         <action
+               class="com.demo.preference.AddPerpertyChangeListener"
+               id="com.demo.preference.action1"
+               label="AddPropertyChangeListenr"
+               style="push"
+               toolbarPath="additions">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>
