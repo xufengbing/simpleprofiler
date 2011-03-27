@@ -32,3 +32,5 @@ Setting a value using the new code is a bit more complicated. Clients must know 
   Preferences node = new InstanceScope().getNode(ResourcesPlugin.PI_RESOURCES);
   if (node != null)
     node.put(key, value);
+
+
