@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="rcpmail.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RCP Perspective"
+            class="rcpmail.Perspective"
+            id="rcpmail.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Message"
+            allowMultiple="true"
+            icon="icons/silk/email_edit.png"
+            class="rcpmail.View"
+            id="rcpmail.view">
+      </view>
+      <view
+            name="Mailboxes"
+            allowMultiple="false"
+            icon="icons/silk/email_go.png"
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            id="rcpmail.navigatorView">
+      </view>    
+      <view
+            class="rcpmail.MessageTableView"
+            icon="icons/silk/email_open.png"
+            id="rcpmail.MessageTableView"
+            name="Messages">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Mail"
+            id="rcpmail.category">
+      </category>
+      <command
+            name="Open Mailbox"
+            description="Opens a mailbox"
+            categoryId="rcpmail.category"
+            id="rcpmail.open">
+      </command>
+      <command
+            categoryId="rcpmail.category"
+            defaultHandler="rcpmail.handlers.CreateServerHandler"
+            description="Open a message dialog"
+            id="rcpmail.openMessage"
+            name="Open Message Dialog">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.ExitHandler"
+            id="rcpmail.exit.command"
+            name="Exit Command">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.OpenNewWindowHandler"
+            id="rcpmail.openNewWindowCommand"
+            name="Open New Window Command">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.OpenAnotherMessageViewHandler"
+            id="rcpmail.openAnotherMessageViewCommand"
+            name="Open another message view command">
+      </command>
+      <command
+            defaultHandler="org.eclipse.ui.internal.about.AboutHandler"
+            id="rcpmail.aboutboxCommand"
+            name="Aboutbox Command">
+      </command>
+      <command
+            defaultHandler="org.eclipse.ui.internal.ide.handlers.OpenResourceHandler"
+            id="rcpmail.openFileCommand"
+            name="Open File">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.MarkAsSpamAndMoveHandler"
+            id="rcpmail.markAsSpamAndMove"
+            name="Mark As Spam And Move">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="rcpmail.openAnotherMessageViewCommand"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+2">
+      </key>
+      <key
+            commandId="rcpmail.openMessage"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+3">
+      </key>
+      <key
+            commandId="rcpmail.exit.command"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+X">
+      </key>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="rcpmail.application"
+            name="RCP Mail 2.0">
+         <property
+               name="aboutText"
+               value="%aboutText"/>
+         <property
+               name="aboutImage"
+               value="product_lg.gif"/>
+         <property
+               name="windowImages"
+               value="icons/silk/email.png">
+         </property>
+         <property
+               name="appName"
+               value="RCP Mail 2.0">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="808080">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="33,220,402,15">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="33,245,402,7">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewer
+            viewerId="rcpmail.navigatorView">
+      </viewer> 
+      <viewerContentBinding
+            viewerId="rcpmail.navigatorView">
+         <includes>
+            <contentExtension
+                  pattern="rcpmail.mailboxContent">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="rcpmail.ServerTreeContentProvider"
+            icon="icons/at.gif"
+            id="rcpmail.mailboxContent"
+            labelProvider="rcpmail.ServerLabelProvider"
+            name="MailboxContent"
+            priority="normal">
+         <triggerPoints>
+            <or>
+               <instanceof
+                     value="org.eclipse.core.resources.IProject">
+               </instanceof>
+               <instanceof
+                     value="rcpmail.model.Model">
+               </instanceof>
+            </or>
+         </triggerPoints>
+         <possibleChildren>
+            <or>
+               <instanceof
+                     value="rcpmail.model.Model">
+               </instanceof>
+               <instanceof
+                     value="rcpmail.model.Server">
+               </instanceof>
+               <instanceof
+                     value="rcpmail.model.Folder">
+               </instanceof>
+            </or>
+         </possibleChildren>
+      </navigatorContent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="fileMenu"
+               label="File">
+            <command
+                  commandId="rcpmail.openNewWindowCommand"
+                  icon="icons/silk/application_form_add.png"
+                  label="Open In New Window Command"
+                  style="push">
+            </command>
+            <separator
+                  name="rcpmail.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="rcpmail.openMessage"
+                  icon="icons/silk/server_add.png"
+                  label="Open Message Dialog Command"
+                  style="push">
+            </command>
+            <command
+                  commandId="rcpmail.openAnotherMessageViewCommand"
+                  icon="icons/silk/email_add.png"
+                  label="Open another message view command"
+                  style="push">
+            </command>
+            <separator
+                  name="rcpmail.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="rcpmail.exit.command"
+                  label="Exit Command"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="rcpmail menu"
+               label="rcpmail">
+            <command
+                  commandId="rcpmail.openMessage"
+                  icon="icons/silk/server_add.png"
+                  label="Create New Server"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="helpMenu"
+               label="Help">
+            <command
+                  commandId="rcpmail.aboutboxCommand"
+                  label="About RCP Product Command"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="rcpmail-db-cnf.toolbar1">
+            <command
+                  commandId="rcpmail.openAnotherMessageViewCommand"
+                  icon="icons/silk/application_form_add.png"
+                  label="Open another message view"
+                  style="push">
+            </command>
+            <command
+                  commandId="rcpmail.openMessage"
+                  icon="icons/silk/server_add.png"
+                  label="Open new server dialog"
+                  style="push">
+            </command>
+            <command
+                  commandId="rcpmail.openAnotherMessageViewCommand"
+                  icon="icons/silk/email_add.png"
+                  id="dropdownMenuId"
+                  label="Create new mail server"
+                  style="pulldown">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:rcpmail.navigatorView">
+         <command
+               commandId="rcpmail.openMessage"
+               icon="icons/silk/server_add.png"
+               label="Open new server dialog"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:dropdownMenuId">
+         <command
+               commandId="rcpmail.openMessage"
+               icon="icons/silk/server_add.png"
+               label="Open server wizard"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:rcpmail.view">
+         <command
+               commandId="rcpmail.markAsSpamAndMove"
+               icon="icons/silk/bug_add.png"
+               label="Mark as spam and move to junk"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:rcpmail.navigatorView">
+         <command
+               commandId="rcpmail.openNewWindowCommand"
+               icon="icons/silk/application_form_add.png"
+               label="Open new window"
+               style="push">
+         </command>
+         <command
+               commandId="rcpmail.openMessage"
+               icon="icons/silk/server_add.png"
+               label="Create new server"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

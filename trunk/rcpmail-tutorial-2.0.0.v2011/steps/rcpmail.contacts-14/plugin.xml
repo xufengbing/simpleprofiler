@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="rcpmail.contacts.ContactsContentProvider"
+            id="rcpmail.contacts.contactContent"
+            labelProvider="rcpmail.contacts.ContactsLabelProvider"
+            name="Contacts Content"
+            priority="normal">
+         <enablement>
+            <or>
+               <instanceof
+                     value="rcpmail.model.Model">
+               </instanceof>
+               <instanceof
+                     value="rcpmail.contacts.model.Contacts">
+               </instanceof>
+               <instanceof
+                     value="rcpmail.contacts.model.Contact">
+               </instanceof>
+            </or>
+         </enablement>
+      </navigatorContent>
+   </extension>
+
+</plugin>
