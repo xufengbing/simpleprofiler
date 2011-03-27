@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RCPmail 2.0 tutorial examples plugin
+Bundle-SymbolicName: com.gerhardtinformatics.tutorial.rcp;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: eclipsercp.org
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipsercp.samplings
+ 

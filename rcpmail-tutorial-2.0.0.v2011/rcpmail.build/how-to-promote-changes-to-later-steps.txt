@@ -1,0 +1,13 @@
+
+How to push changes from one step to later steps:
+
+You make a change in step 3, for example.
+- commit the changes in step 3, note the revisions. You need them 3 lines below.
+- update all later steps (not sure, but to be safe)
+- run the launch config called "promote from step-03"
+  It asks for the start revision where merging should begin. It's usually one of the latest revisions.
+    If you use a revision that is too old, you might get obsolete changes back
+  This will merge the changes from step 3 into all steps >3
+  Watch the SVN console for conflicts, you need to merge them manually
+- commit all steps >3
+

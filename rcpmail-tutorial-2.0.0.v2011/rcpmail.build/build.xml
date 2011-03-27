@@ -1,0 +1,67 @@
+<!--
+        Currently this build file does not build the rcp mail projects,
+        but creates a workspace with all tuotorial steps
+        and deploys it to a given web server, ready for download...
+    -->
+<project name="rcpmail.build" default="buildAndDeployFromSvn">
+	<property file="build.properties" />
+   <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" 
+   	               classpath="./svn/svnant.jar;./svn/svnClientAdapter.jar;./svn/svnkit.jar;./svn/ganymede.jar;./svn/svnjavahl.jar" />
+
+
+	<target name="clean">
+		<delete dir="${buildDirectory}" />
+	</target>
+
+	<target name="fetchAllProjectsFromSvn">
+		<echo message="Checking out all RCP Mail projects" />
+		<svn javahl="false" username="anonymous" password="">
+			<checkout revision="HEAD" url="https://max-server.myftp.org:444/svn/rcp-mail/trunk/projects/steps" destPath="${buildDirectory}/svn/rcpmail" />
+		</svn>
+	</target>
+
+	<target name="deployToWebServer">
+		<tstamp/>
+		<property name="rcpmailVersion" value="2.0.0.v${DSTAMP}${TSTAMP}" />
+		<delete dir="${webServerResultDir}/download" />
+		<svn javahl="false" username="anonymous" password="">
+			<export revision="HEAD" srcPath="${svnSourceDir}" destPath="${buildDirectory}/export/rcpmail" />
+		</svn>
+		<zip destfile="${buildDirectory}/export/rcpmail-tutorial-${rcpmailVersion}.zip" basedir="${buildDirectory}/export/rcpmail" />
+		<copy file="${buildDirectory}/export/rcpmail-tutorial-${rcpmailVersion}.zip" todir="${webServerResultDir}/download" />
+
+		<copy file="rcpmail-downloads.html" todir="${webServerResultDir}/download" overwrite="true">
+			<filterset>
+				<filter token="rcpmailVersion" value="${rcpmailVersion}" />
+			</filterset>
+		</copy>
+	</target>
+
+	<target name="buildFromSvn" depends="clean,fetchAllProjectsFromSvn" />
+
+	<target name="buildAndDeployFromSvn" depends="buildFromSvn">
+		<antcall target="deployToWebServer">
+			<param name="svnSourceDir" value="${buildDirectory}/svn/rcpmail" />
+		</antcall>
+	</target>
+
+   <target name="buildAndDeployFromWorkspace" depends="clean">
+	        <antcall target="deployToWebServer">
+	            <param name="svnSourceDir" value="../" />
+	        </antcall>
+    </target>
+
+	<!--
+   This target is run on the actual build server.
+   Firstly it gets the latest version of theis build project from svn,
+   then runs the build.
+   -->
+	<target name="bootstrapBuildFromSvn">
+		<delete dir="${buildDirectory}-bootstrap" />
+		<svn javahl="false" username="anonymous" password="">
+			<checkout revision="HEAD" url="https://max-server.myftp.org:444/svn/rcp-mail/trunk/projects/rcpmail.build" destPath="${buildDirectory}-bootstrap" />
+		</svn>
+		<ant antfile="${buildDirectory}-bootstrap/build.xml" target="buildAndDeployFromSvn" dir="${buildDirectory}-bootstrap" />
+	</target>
+</project>
+

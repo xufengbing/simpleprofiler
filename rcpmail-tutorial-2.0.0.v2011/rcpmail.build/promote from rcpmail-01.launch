@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramLaunchConfigurationType">
+<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;launchConfigurationWorkingSet editPageId=&quot;org.eclipse.ui.resourceWorkingSetPage&quot; factoryID=&quot;org.eclipse.ui.internal.WorkingSetFactory&quot; label=&quot;working set&quot; name=&quot;working set&quot;&gt;&#13;&#10;&lt;item factoryID=&quot;org.eclipse.ui.internal.model.ResourceFactory&quot; path=&quot;/rcpmail-01&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item factoryID=&quot;org.eclipse.ui.internal.model.ResourceFactory&quot; path=&quot;/rcpmail-03&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item factoryID=&quot;org.eclipse.ui.internal.model.ResourceFactory&quot; path=&quot;/rcpmail-04&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item factoryID=&quot;org.eclipse.ui.internal.model.ResourceFactory&quot; path=&quot;/rcpmail-00&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item factoryID=&quot;org.eclipse.ui.internal.model.ResourceFactory&quot; path=&quot;/rcpmail-02&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;/launchConfigurationWorkingSet&gt;}"/>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="Path" value="${workspace_loc}\rcpmail.build\svn-win32\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Programme\Gemeinsame Dateien\Lenovo;C:\Programme\ThinkPad\ConnectUtilities;C:\Programme\Intel\Wireless\Bin\;C:\Programme\Lenovo\Client Security Solution;&quot;C:\Programme\groovy-1.5.7\bin&quot;;$OLD_KEY_VALUE;&quot;C:\Programme\groovy-1.5.7\bin&quot;"/>
+</mapAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${none}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/rcpmail.build/promote-01.bat}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="${string_prompt}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/rcpmail.build}"/>
+</launchConfiguration>

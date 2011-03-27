@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            contentProvider="rcpmail.persistent.PersistentNavigatorContentProvider"
+            id="rcpmail.persistent.mailboxContent"
+            labelProvider="rcpmail.NavigatorLabelProvider"
+            name="Persistent Mailbox Content"
+            priority="normal">
+         <enablement>
+            <or>
+               <instanceof
+                     value="rcpmail.model.ModelObject">
+               </instanceof>
+            </or>
+         </enablement>
+         <override
+               policy="InvokeAlwaysRegardlessOfSuppressedExt"
+               suppressedExtensionId="rcpmail.mailboxContent">
+         </override>
+      </navigatorContent>
+   </extension>
+
+</plugin>

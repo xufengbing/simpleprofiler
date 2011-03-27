@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rcpmail07 Plug-in
+Bundle-SymbolicName: rcpmail07_MessageView_Binding;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: rcpmail.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.databinding,
+ org.eclipse.jface.databinding,
+ org.eclipse.core.databinding.beans
+Bundle-ActivationPolicy: lazy
+

@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<html>
+  <head>
+    <!-- !!! Print with 80% scaling with Firefox -->
+    <title>RCP Mail 2.0 -- Data Binding, Commands and Common Navigator</title>
+    <meta name="title" content="RCP Mail 2.0"/>
+    <meta name="author" content="Frank Gerhardt et al."/>
+    <meta name="date" content="2009-04 20"/>
+    <meta name="company" content=""/>
+    <link rel="stylesheet" type="text/css" href="slideous.css"/>
+    <script type="text/javascript" src="slideous.js"></script>
+  </head>
+
+  <body>
+  
+  <div id="statusbar"><span style="float: right;"><!--
+  <button id="contentbutton" title="content">C</button>
+  -->
+  <button id="homebutton" title="first slide">1</button>
+  <button id="prevslidebutton" title="previous slide">&laquo;</button>
+  <button id="previtembutton" title="previous item">&lsaquo;</button>
+  <button id="nextitembutton" title="next item">&rsaquo;</button>
+  <button id="nextslidebutton" title="next slide">&raquo;</button>
+  <button id="endbutton" title="last slide">{$slidecount}</button>
+  <button id="incfontbutton" title="content">A+</button>
+  <button id="decfontbutton" title="first slide">A-</button>
+  <select id="tocbox" size="1">
+    <option selected="selected"></option>
+  </select> </span> 
+  <span id="eos">&frac12;</span> <span title="{$location}, {$date}">{$title},
+  {$author}</span> <span style="position: relative; left: 50;"><span
+        id="slideidx"></span> of {$slidecount} </span></div>
+    
+    <div class="slide" id="titlepage">
+    <h1></h1>
+    <p style="font-size: 200%; font-weight: bold;">RCP Mail 2.0 -- Data Binding, Commands and Common Navigator <span class="printonly">Handout</span></p>
+    <p style="text-align:nocenter">Frank Gerhardt, Michael Scharf, Kai T&ouml;dter, Boris Bokowski, Francis Upton IV, Paul Webster</p>
+    <p style="text-align:nocenter"><img src="splash.png"  style="float:right height:25%"/><!--   </p>
+    <p style="text-align:nocenter">--> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="efe2009.png" style="" /></p>
+    <p>All rights reserved. Distributed under 
+      <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/us">Creative 
+    Commons</a> Attribution-Noncommercial-Share Alike 3.0 United States License</p>
+    </div>
+    
+<!-- 
+    <div class="slide"  id="Abstract" >
+        <h1>Abstract</h1>
+        <p>The RCP Mail example shows its age. Many new and useful features
+        have been added to the Eclipse Platform since the example was written,
+        and it is time to take the example to new levels.</p>
+        <p>In a hands-on way, we will bring the example up to date by
+        adopting some of the more interesting new APIs developed since the
+        original RCP Mail example was written.</p>
+        <p>In particular, we will show the following:</p>
+        <ul>
+            <li>How to use the new Commands API to contribute to menus,
+            toolbars, and context menus, and how to create key bindings.</li>
+            <li>How to use the Common Navigator to provide a view that shows
+            multiple sets of unrelated content.
+            </li>
+            <li>How to use the data binding framework to make the UI code
+            easier to write, and easier to test.</li>
+        </ul>
+        <p>Explanations of the concepts will be given by members of the
+        Eclipse Platform UI team, while the concrete examples will be explained
+        by experienced Eclipse professionals.</p>
+        <p>We will also show the different tools that are provided by
+        Eclipse PDE and JDT to help you developing RCP applications.</p>
+        <p><a href="http://www.eclipsecon.org/2009/sessions?id=641">http://www.eclipsecon.org/2009/sessions?id=641</a></p>
+    </div>
+            
+    <div class="slide newpage" id="List of Slides" >
+          <h1>List of Slides</h1>
+          <ul id="toc" class="NOTincremental">
+            <li>
+            </li>
+          </ul>
+    </div>
+ -->
+ 
+<!-- 
+   <div class="slide" id="Authoring (will be removed)">
+      <h1>Authoring (will be removed)</h1>
+      <p>Enter the same title into the id attribute of the div and the h1. 
+      This let's you see the presentation structure in the outline view.
+      I use a perpective with only a big outline view and the editor.</p>
+      <p>For source code, a <a href="http://code.google.com/p/syntaxhighlighter">highlighter</a> is included</p>
+      <p>Put source code in pre tags, at the leftmost column. The class can also be xml, html, sh.</p>
+<pre name="code" class="java:nocontrols">
+public void start(BundleContext context) throws Exception {
+    super.start(context);
+    plugin = this;
+}      
+</pre>
+      <p>Indent HTML tags with 2 spaces, the div for a slide starts with 4 spaces</p>
+      <p>Two empty lines between slides</p>
+      <p>To preview the presentation, open it it Firefox. The <a href="http://goessner.net/articles/slideous">
+      slideous</a> JavaScript presentation toolkit has some useful keybindings</p>
+      <p>To preview the handout, press 'p' (for print out) in Firefox. This puts all slides into one long 
+      page. The real preview with page wrapping shows Firefox's print preview. Participants will get
+      this as PDF </p>
+      <p>Editing tips: use bold font for content, and non-bold for everything 
+      else, HTML editor syntax highlighting preference. You only need to tick 
+      one checkbox at the "content" syntax element </p>
+      <p>When presenting, the font/images can be zoomed with Ctrl-+ and Ctrl--</p>
+    </div>
+ -->
+
+<!-- 
+    <div class="slide" id="The Plan">
+      <h1>The Plan</h1>
+      <p>In this tutorial you will learn about</p>
+      <ul>
+          <li>Data binding - Frank and Boris</li>
+          <li>Command framework - Kai and Paul</li>
+          <li>Common Navigator Framework (CNF) - Michael and Francis</li>
+      </ul>
+      <p>We start with the RCP Mail you probably know already</p>
+      <p>Then we add one feature at a time, with explanations and 
+            live pair-programming</p>
+      <p>You can follow us along in your IDE using the provided samples</p>
+      <p>We will have a programming exercise at the end of each block (3) </p>
+    </div>
+ -->
+    <!-- The list is mostly to give ourselves some orientation. The participants
+    can see that we are bringing a lot of stuff for them -->
+
+    <!--  Time 4h, 240 min
+    
+        Setup 30min, up to rcpmail-01
+    
+        DB 55 min 
+        Exercise 15 min
+        Q&A 10 min
+        
+        Break 15 min
+        
+        Command 40 min 
+        Exercise 15 min
+        Q&A 10 min
+        CNF 30 min 
+        
+        Exercise 15 min
+        Q&A 5 min
+    
+     -->
+<!-- 
+    <div class="slide" id="Steps">
+      <h1>Steps</h1>
+        <p>
+        00: Original RCP Mail 1.0 <br/>
+        01: Introduction of the Model (and artwork) <br/>
+        02: The New Server Wizard<br/>
+        03: Adding data binding<br/>
+        04: Adding validator and error messages<br/>
+        05: Adding field decorations<br/>
+        06: Using data binding in the NavigationView (ContentProvider)<br/>
+        07: Adding a view with a table of Messages<br/>
+        08: MessageView: 1. use selection of NavigationView, 2. bind table contents to selection details <br/>
+        09: <b>Exercise: </b>port binding with validator<br/>
+        10: Commands: add/change About, 
+             New Server command, ways of placing it in the UI, 
+             MarkAsSpam command,
+             consolidate predefined actions/commands,
+             Sync command, enabledWhen, visibleWhen, 
+             Delete command <br/>
+        11: <b>Exercise: </b> File/Exit and New Window command: exercise<br/>
+        12: CNF instead of SimpleNavigator, change in-place<br/>
+        13: Add Contacts plugin model and content/label providers<br/>
+        14: <b>Exercise: </b> Hook Contacts plugin to CNF
+        </p>
+    </div>
+-->
+
+<!-- 
+   <div class="slide" id="Set-up">
+      <h1>Set-up</h1>
+      <p>You need</p>
+      <ul>
+        <li>Eclipse SDK 3.4.x or higher as your IDE </li>
+        <li>Eclipse SDK 3.5M6 as your target platform</li>
+        <li>Our samples</li>
+        <ul>
+          <li>Code for each step, rcpmail-00 to rcpmail-99</li>
+          <li>Handout (these slides)</li>
+        </ul>
+      </ul>
+      <p>You can get it from</p>
+      <ul>
+          <li>Download (slow in the conference center)</li>
+          <ul>
+              <li> SDK from eclipse.org </li>
+              <li> Our samples from
+               <a href="http://max-server.myftp.org/rcp-mail/download/rcpmail-downloads.html">
+               Kai's server.</a> <b>Continuous build!</b></li>
+          </ul>
+          <li>USB sticks</li>
+                    <ul>
+              <li>A snapshot of our samples </li>
+          </ul>
+        </ul>
+    </div>
+ -->
+
+
+    <!-- This is to get people interested in the whole 4 hours -->
+    <div class="slide" id="The Result">
+      <h1>The Result</h1>
+      <p><img src="rcpmail-99.png" alt="" /></p>
+      <p>1 minute demo of the features</p>
+    </div>
+
+
+<!-- 
+    <div class="slide" id="Samples">
+      <h1>Samples</h1>
+      <p><img src="workspace.png" style="float:right" alt="" /></p>
+      <p>The zip file, e.g. <b>rcpmail-tutorial-2.0.0.v2009*.zip</b>, contains
+      workspace projects</p>
+      <p>Open Eclipse with a new empty workspace</p>
+      <p>If you are not using 3.5M6 for development, set your <b>target platform</b> to 3.5M6</p>
+      <p>Import the projects from the zip file using <b>Import > 
+      Existing projects into Workspace</b>. Choose "Select archive file"</p>
+      <p>Every step contains a <b>launch configuration</b>. Try starting rcpmail-99</p>
+      <p>If you have problems, <b>raise your hand</b> and someone of us will 
+      come and help you</p>
+    </div>
+
+
+    <div class="slide" id="Comparing Steps">
+      <h1>Comparing Steps</h1>
+      <p>You can easily compare two steps to see what has changed</p>
+      <p>Select the old and the new project in the package explorer and 
+      invoke from the context menu <b>Compare With > Each Other</b> </p>
+      <p><img src="compare-steps.png" alt="" /></p>
+      <p>Choosing the first and second selection carefully puts 
+      the previous project always on the left and the next on the right</p>
+    </div>
+
+
+    <div class="slide" id="Getting Closer">
+      <h1>Getting Closer</h1>
+      <p>The first topic area is Data Binding</p>
+      <p>But: we need to bore you with some ground work first</p>
+      <p>For a meaningful demo of data binding we introduce a domain model</p>
+      <p>While we are laying the foundation, we also update the artwork</p>
+    </div>
+
+
+    <div class="slide" id="Step 00: Before">
+      <h1>Before</h1>
+      <p><img src="rcpmail-00.png" alt="" /></p>
+      <p>Have a look at rcpmail-00 in your workspace and 
+      launch it using the provided launch config</p>
+    </div>
+
+
+    <div class="slide" id="Step 01: After">
+      <h1>After</h1>
+      <p><img src="rcpmail-01.png" alt="" /></p>
+      <p>Have a look at rcpmail-01 in your workspace and 
+      launch it using the provided launch config</p>
+    </div>
+
+
+    <div class="slide" id="Step 01: The Model">
+      <h1>The Model</h1>
+      <p>The model is a simple JavaBean model</p>
+      <p>ModelObject is the base class providing PropertyChangeSupport</p>
+      <p>Changes to the template generated by the SDK</p>
+      <ul>
+          <li>Model, Server, Folder, Message</li>
+          <li>Increased bundle version to 2.0.0</li>
+          <li>Including test data</li>
+          <li>Icons, splash</li>
+      </ul>
+      <p>Look at the model in the rcpmail.model package of rcpmail-01</p>
+    </div>
+ -->
+
+    <div class="slide" id="RCP Mail Classes">
+      <h1>RCP Mail Classes</h1>
+      <p><img src="rcpmail-all-classes.png" alt="" /></p>
+    </div>
+
+
+<!-- 
+    <div class="slide" id="Databinding TODOs">
+      <h1>Databinding TODOs</h1>
+      <p>TODO 5 selection changed events instead of one: have one message
+      selected in the Inbox, Select Junk folder.  This
+			if (message instanceof Message) {
+				setMessage((Message) message); // not necessary
+			} else {
+				setMessage(null); // only once!
+			}
+      is called 5 times. The selection changed event is always a different one, 
+      but the contained message is 5 times the same, and even wrong</p>
+    </div>
+ -->
+
+
+    <div class="slide" id="Databinding Plug-ins">
+      <h1>Databinding Plug-ins</h1>
+      <p><img src="databinding-layers.png" style="height:30%; float:right" alt="" /></p>
+      <p>Databinding comes in <b>three layers</b></p>
+      <ol>
+        <li>WorkbenchObservalbes in org.eclipse.<b>ui</b></li>
+        <li>org.eclipse.<b>jface</b>.databinding</li>
+        <li>Four <b>core</b> plug-ins</li>
+        <ul>
+          <li>org.eclipse.core.databinding</li>
+          <li>org.eclipse.core.databinding.beans</li>
+          <li>org.eclipse.core.databinding.properties</li>
+          <li>org.eclipse.core.databinding.observables</li>
+        </ul>
+      </ol>
+      <p><img src="databinding-dependencies.png" alt="" /></p>
+    </div>
+
+
+    <div class="slide" id="Data Binding Tour">
+      <h1>Data Binding Tour</h1>
+      <p>We introduce data binding in four areas</p>
+      <ol>
+        <li><b>Wizard </b>to create a new mail server <b>(new in 2.0)</b></li>
+        <li><b>Tree</b> for servers and folders</li>
+        <li><b>Table</b> of messages <b>(new in 2.0)</b></li>
+        <li>Message display</li>
+      </ol>
+      <p><img src="databinding-features.png" alt="" /></p>
+      <p>At the end of the data binding tour will be an exercise 
+      where you will add your on binding to a text field in the wizard.</p>
+      <p>Optional: new column, or third level in tree.</p>
+    </div>
+
+
+<!-- 
+    <div class="slide" id="Data Binding">
+      <h1>Data Binding</h1>
+      <p>TODO BB a number of slides to motivate DB, introduce the concepts</p>
+      <p>mention that you can bind trees and collections, details later</p>
+      <p>explain values more detailled here</p>
+    </div>
+ -->
+
+<!-- 
+    <div class="slide" id="From Triangle to Straight Line">
+      <h1>From Triangle to Straight Line</h1>
+      <p>From model-view-controller (MVC) triangle to more <b>independence</b></p>
+      <img src="triangle-to-straight-line.png" alt="" />      
+      <p style="font-size: smaller">From David Orme, Introducing JFace Data Binding, EclipseCon 2006, made available under EPL 1.0</p>
+    </div>
+ -->
+
+
+    <div class="slide" id="Vision">
+      <h1>Vision</h1>
+      <p><b>Get rid of listeners in UI code!</b></p>
+      <p>Why?</p>
+      <ul>
+        <li>Hard to write, hard to maintain.</li>
+        <li>For every aspect:</li>
+        <ul>
+          <li>Copy initial state into widget.</li>
+          <li>Hook listener (to widget, to model).</li>
+          <li>Write code to sync state incrementally.</li>
+          <li>Validation, conversion typically not separated.</li>
+          <li>Threading.</li>
+        </ul>
+      </ul>
+    </div>
+
+
+    <div class="slide" id="Model View Controller">
+      <h1>Model View Controller</h1>
+      <p><img src="mvc.png" alt="" /></p>
+    </div>
+
+
+    <div class="slide" id="Concepts">
+      <h1>Concepts</h1>
+      <p>The two main concepts, and <em>layers</em> are</p>
+      <ul>
+        <li>Observables</li>
+        <li>Bindings</li>
+      </ul>
+      <img src="databinding-concepts.png" stlyle="height:75%" alt="" />
+      <p>Note: by convention UI always left, model always right, 
+      on <b>diagrams</b> and in the <b>API</b>, 
+      see e.g. DataBindingContext, ViewerSupport</p>
+    </div>
+
+<!-- 
+    <div class="slide" id="IObservable">
+      <h1>IObservable</h1>
+      <p><img src="iobservable.png" alt="" /></p>
+      <p>This interface makes listening to changes uniform</p>
+    </div>
+
+
+    <div class="slide" id="Binding">
+      <h1>Binding</h1>
+      <p><img src="binding.png" alt="" /></p>
+      <p>Represents the binding between two IObservables</p>
+      <p>Needs to be added to a DataBindingContext</p>
+    </div>
+
+
+    <div class="slide" id="DataBindingContext">
+      <h1>DataBindingContext</h1>
+      <p><img src="databinding-context.png" alt="" /></p>
+      <p>Creation and management of Bindings</p>
+      <p>Aggregates validation statuses</p>
+    </div>
+
+
+    <div class="slide" id="Step 02/05: Goal">
+      <h1>Goal</h1>
+      <p>We implement a wizard with several text fields</p>
+      <p><img src="wizard.png" alt="" /></p>
+      <p>1 minute demo</p>
+    </div>
+-->
+
+     <!-- a lot of structural content, just to give people a feeling where they are.
+     Basically we have three loops: 1. topics, 2. features of each topic, 3. incremental 
+     implementation -->
+ 
+ <!-- 
+   <div class="slide" id="Step 02/05: Plan">
+      <h1>Plan</h1>
+      <p><img src="wizard.png" style="float:right" alt="" /></p>
+      <p>We do it in four steps</p>
+      <ol>
+        <li>the wizard itself</li>
+        <li>adding data binding</li>
+        <li>adding validation and error messages</li>
+        <li>adding field decorations</li>
+      </ol>
+      <p>We take the first step from the samples and 
+      show you the second and third step. We'll take the 
+      fourth from the samples again.</p>
+    </div>
+ -->
+ <!-- 
+      KT really not?</p>
+      <p>TODO need to talk about cross-field validation and enabling Finish
+-->
+
+<!-- 
+    <div class="slide" id="Step-02: New Server Wizard">
+      <h1>The New Server Wizard</h1>
+      <p>We use the MessagePopupAction action and open the wizard from run()</p>
+        <ul>
+          <li> to create a mailbox</li>
+          <li> at first without command (using messagePopup action) and no databinding yet </li>
+            <li>only layout and widgets</li>
+        </ul>
+        <p>Launch rcpmail-02 to see the wizard</p>
+    </div>
+ -->
+
+
+    <!--  TODO did we include copyright in code??? 
+     -->
+    <div class="slide" id="Step-03: Binding Text Fields">
+      <h1>Binding Text Fields</h1>
+      <p>In wizard: binding of text fields to int and string</p>
+<pre name="code" class="java:nocontrols">
+DataBindingContext dbc = new DataBindingContext();
+dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify),
+                      BeansObservables.observeValue(server, "hostname"));
+</pre>      
+      <p></p>
+    </div>
+
+
+    <div class="slide" id="Converters and Validators">
+      <h1>Converters and Validators</h1>
+      <p><img src="converters-and-validators.png" alt="" /></p>
+<pre name="code" class="java:nocontrols">
+new UpdateValueStrategy().setBeforeSetValidator(new IValidator() {
+  public IStatus validate(Object value) {
+    String s = (String) value;
+    if (s.contains(" ")) {
+      return ValidationStatus.error("no spaces please");
+    }
+    return ValidationStatus.ok();
+}
+</pre>      
+    </div>
+
+<!-- 
+    <div class="slide" id="Step-04: Validation">
+      <h1>Validation</h1>
+      <p><img src="wizard-validation.png" alt="" /></p>
+      <p>Provided by WizardSupport</p>
+      <p>Enables Finish button when not errors exist</p>
+    </div>
+    
+    
+    <div class="slide" id="Step-05: Field Decorations">
+      <h1>Control decorations</h1>
+      <p><img src="field-decoration.png" style="height:20%" alt="" /></p>
+      <p>Used for field validation or other decorations (help available, required field, etc).</p>
+      <p>Render an image next to a control.</p>
+      <p>Positioned on the left or right.</p>
+      <p>Do not take part in layout, no guarantees about clipping. Use margin!</p>
+      <p>Optional description text when user hovers.</p>
+    </div>
+ -->
+    
+    
+    <div class="slide" id="Data binding tree content provider">
+      <h1>Data binding tree content provider</h1>
+      <p>Goal: For each parent, one IObservableList representing children.</p>
+      <p>To create these lists lazily, we provide a factory returning lists.</p>
+      <p>
+<pre name="code" class="java:nocontrols">
+			public IObservable createObservable(Object parent) {
+				if (parent instanceof Model) {
+					return BeanProperties.list("servers").observe(parent);
+				}
+				if (parent instanceof Server) {
+					return BeanProperties.list("folders").observe(parent);
+				}
+				return null;
+			}
+</pre></p>
+      <p>Our (invisible) root element is "Model".</p>
+      <p>BeanProperties.list("servers") is a factory for creating IObservableLists.</p>
+      <p>Second constructor argument is a "TreeStructureAdvisor".</p>
+      <p>Is consulted when finding an element in the tree that has not been materialized: notice "polish" when starting app.</p>
+      <p>Second purpose: optimize for elements without children.</p>
+    </div>
+
+      <!-- 
+          <p>TODO: remove call to setSorter</p>
+       -->
+<!-- 
+    <div class="slide" id="Step 06: NavigationView">
+      <h1>NavigationView</h1>
+      <p>Data binding label provider</p>
+      <p>Needs to listen to attributes of materialized ("known") elements.</p>
+      <p>Data binding content provider has getKnownElements().</p>
+      <p>
+<pre name="code" class="xml:nocontrols">
+		treeViewer.setLabelProvider(new MailLabelProvider(contentProvider
+				.getKnownElements()));
+</pre></p>
+      <p>Label provider needs to know which attributes to listen to.</p>
+      <p>
+<pre name="code" class="xml:nocontrols">
+	MailLabelProvider(IObservableSet knownElements) {
+		super(Properties.observeEach(knownElements, BeanProperties
+				.values(new String[] { "name", "hostname", "messages" })));
+		initializeImageDescriptors();
+	}
+</pre></p>
+      <p>Then, just override getText() with computation of label.</p>
+      <p>
+<pre name="code" class="xml:nocontrols">
+	public String getText(Object element) {
+		if (element instanceof Server) {
+			return ((Server) element).getHostname();
+		}
+		if (element instanceof Folder) {
+			Folder folder = (Folder) element;
+			return folder.getName() + " (" + folder.getMessages().length + ")";
+		}
+		return null;
+	}
+      <p>Look, Mom, no listeners!</p>
+      <p>We will demo later how labels are updated correctly.</p>
+</pre></p>
+    </div>
+
+
+    <div class="slide" id="Step 07: Goal Messages View">
+      <h1>Goal</h1>
+      <p>We implement a new view with a table of messages</p>
+      <p><img src="rcpmail-08.png" alt="" /></p>
+      <p>1 minute demo</p>
+    </div>
+    
+
+    <div class="slide" id="Step 07: Plan">
+      <h1>Plan</h1>
+      <p>What we need to do is</p>
+      <ul>
+        <li>the view and a TableViewer</li>
+        <li>adding data binding to the TableViewer</li>
+        <li>adding selection awareness</li>
+      </ul>
+    </div>
+
+    <div class="slide" id="Table Binding">
+      <h1>Table Binding</h1>
+      <p>Similar to Tree Binding</p>
+      <p>Using <code>Observable<b>ListTree</b>ContentProvider</code> and 
+      <code>Observable<b>Map</b>LabelProvider</code></p>
+      <p>Content provider needs an <code>IObservableFactory</code></p>
+      <p>Label provider needs to know the content provider's known elements</p>
+      <p>Label provider observer all properties of the known elements</p>
+    </div>
+
+
+    <div class="slide" id="Step 07: Adding Messages View">
+      <h1>Adding Messages View</h1>
+      <p>Launch rcpmail-07 to see the new view, still with an empty table</p>      
+      <p>It uses a WriteableValue for it's "input", like the MessageTableView</p>
+    </div>
+ -->
+
+
+<!-- 
+    <div class="slide" id="Step 08: Message View">
+      <h1>Message View</h1>
+      <p>TODO one step enough!</p>
+      <p>no new concepts to explain, just do it</p>
+    </div>
+
+
+    <div class="slide" id="Properties">
+      <h1>Properties</h1>
+      <p>TODO 2 use cases</p>
+    </div>
+
+
+    <div class="slide" id="Nested Properties">
+      <h1>Nested Properties</h1>
+      <p>TODO could we show a nested property anywhere? 
+      Could add this to MV, above Subject:.</p>
+    </div>
+ -->
+
+<!-- 
+    <div class="slide" id="Step 09: Exercise Data Binding">
+      <h1>Exercise</h1>
+      <p>Basic: Add validator for port in wizard.</p>
+      <p>Alternative: Make message subject editable.</p>
+      <p>Advanced: Add another column to table, e.g. isRead, (using a nested property?)</p>
+      <p>Keeners: Add messages to tree, under Folders (for fun, not because it makes sense UI wise).</p>
+    </div>
+ -->
+
+
+    <div class="slide" id="CommandFramework">
+      <h1>Command Framework</h1>
+      <ul>
+      <li>A command is an abstraction of some semantic behaviour.</li>
+      <li>A command is not an implementation of that behaviour. That's a handler.</li>
+      <li>A command is not the visual presentation of that behaviour. That's a menu contribution.</li>
+      </ul>
+      <p>
+<pre name="code" class="xml:nocontrols">
+         &lt;command categoryId="rcpmail.category"  
+            description="Synchronize with Server"
+            name="Synchronize" id="rcpmail.syncServer" &gt;
+         &lt;/command&gt;
+</pre></p>
+    </div>
+    
+    <div class="slide" id="HandlersB">
+      <h1>Handlers</h1>
+      <ul>
+      <li>A handler implements one behaviour for a command.</li>
+      <li>The active handler controls the command's enabled state.</li>
+      <li>Handlers most commonly extend AbstractHandler.</li>
+      <li>Handlers are provided an application context in their execute(*) method.</li>
+      </ul>
+      <p>
+<pre name="code" class="java:nocontrols">
+// CreateServerHandler.java
+public Object execute(ExecutionEvent event) {
+      WizardDialog dialog = new WizardDialog(HandlerUtil
+            .getActiveWorkbenchWindow(event).getShell(),
+            new CreateServerWizard());
+      dialog.open();
+      return null;
+}</pre></p>
+    </div>
+    
+    <div class="slide" id="MenuContributions1">
+      <h1>Menu Contributions</h1>
+      <ul>
+      <li>Menus and Toolbars are important for executing application functionality.</li>
+      <li>Menu Contributions create the menu and toolbar structures and insert them into the correct eclipse location.</li>
+      </ul>
+      <p>
+<pre name="code" class="xml:nocontrols">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="fileMenu"
+               label="&amp;File">
+            <command
+                  commandId="rcpmail.openNewWindowCommand"
+                  icon="icons/silk/application_form_add.png"
+                  label="New &amp;Window"
+                  style="push">
+            </command>
+            <separator
+                  name="rcpmail.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="rcpmail.command.createServer"
+                  icon="icons/silk/server_add.png"
+                  label="New &amp;Server"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+</pre></p>
+    </div>
+    
+    <div class="slide" id="Step 10: Using Commands">
+      <h1>Using Commands</h1>
+        <p>The old version of this RCP app uses ActionFactory to generate Actions to be used in the
+        main menu.   In the new version, we'll use commands to create the
+        main menu instead.</p>
+        <p>First, we'll replace the about action with the equivalent commands.</p>
+        <p>We will need to place the Open New Window command correctly when 
+        we replace the ActionFactory action.</p>
+    </div>
+
+    <div class="slide" id="HandlersMulti">
+      <h1>Handlers</h1>
+      <ul>
+      <li>The default handler case is useful, but also uninteresting.</li>
+      <li>Multiple handlers can register to handle behaviour for a command.</li>
+      <li>At any give time there can be either 0 or 1 active handlers for a command.</li>
+      <li>Handlers can be declaratively or programmatically activated.</li>
+      </ul>
+<pre name="code" class="java:nocontrols">
+// often in createPartControl(Composite)
+IHandlerService hs = (IHandlerService) getSite().getService(
+	IHandlerService.class);
+markAsSpamHandler = new MarkViewAsSpamAndMoveHandler(this);
+hs.activateHandler(MarkAsSpamAndMoveHandler.MARK_AS_SPAM_COMMAND_ID,
+	markAsSpamHandler);
+</pre>
+    </div>
+
+    <div class="slide" id="HandlerPick">
+      <h1>Handlers - Pick one</h1>
+      <p>Say we want the refresh command to refresh information in the active view:</p>
+      <img src="PickAHandler.png" alt="Picking a refresh handler" />
+    </div>
+
+    <div class="slide" id="HandlerCases">
+      <h1>Handlers</h1>
+      <p>The three most common handler contribution types are:</p>
+      <ul>
+      <li>A default handler - this is a global handler, usually instantiated once</li>
+      <li>Handler for a part - this handler will deal with a specific type of view or editor</li>
+      <li>Handler for a selection - this handler is usually keyed off of the selection type</li>
+      </ul>
+      <p>There are a couple of ways to contribute handlers at the different levels:</p>
+      <ul>
+      <li>Declarative handlers use activeWhen and extract needed state from the application context.</li>
+      <li>Programmatic handlers are activated with part creation.</li>
+      </ul>
+    </div>
+
+    <div class="slide" id="Step 10a: Using Commands">
+      <h1>Creating Multiple Handlers</h1>
+      <p>We want to introduce the Mark As Spam command.  In the Message View, it should
+      mark the message as spam and move it to the Junk folder.  In
+      the Message Table View, it should mark the one or more selected messages as
+      spam and move them to the Junk folder.</p>
+      <p>If we provide the ability to delete messages it would work in a similar
+      fashion.  The message would be moved to the Trash folder.</p>
+    </div>
+
+    <div class="slide" id="CoreExpressions">
+      <h1>Evaluating Core Expressions</h1>
+      <ul>
+      <li>The IEvaluationService takes care of handlers activeWhen and enabledWhen, menus visibleWhen, and activities enabledWhen.</li>
+      <li>This service is one of the main listeners to source variable changes.</li>
+      <li>Expressions that use the changing variable are re-evaluated.</li>
+      <li>Most of the variables available from the platform are listed in <code>org.eclipse.ui.ISources</code></li>
+      </ul>
+<pre name="code" class="xml:nocontrols">
+   &lt;enabledWhen&gt;
+   &lt;with
+         variable="selection"&gt;
+      &lt;iterate
+            ifEmpty="false"
+            operator="and"&gt;
+         &lt;instanceof
+               value="rcpmail.model.Message"&gt;
+         &lt;/instanceof&gt;
+         &lt;/iterate&gt;
+         &lt;/with&gt;
+   &lt;/enabledWhen&gt;
+</pre>
+    </div>
+   
+    <div class="slide" id="Step 10b: Using Commands">
+      <h1>Sync With Server Command</h1>
+
+      <p>The Sync With Server command should be enabled when a single folder is selected.
+      This command is general to the RCP and so can easily be contributed in the plugin.xml.</p>
+    </div>
+
+    <div class="slide" id="ActiveKeyBindings">
+      <h1>Active Keybindings</h1>
+      <ul>
+      <li>Different workflows require that some keys operate differently, and in Eclipse that means execute different commands.</li>
+      <li>We don't want our keybindings to be overly dynamic, however.</li>
+      <li>2 main ways that keybindings change are scheme and contexts:
+      <ul>
+      <li>A scheme is a group of keybindings - very static.</li>
+      <li>A context scopes a keybinding, and contexts change with the program's focus.</li>
+      </ul></li>
+      <li>For example, when editing text CTRL+D deletes a line.  But when inputting in the Console view, CTRL+D produces the EOF</li>
+      </ul>
+      <p>
+</p>
+<pre name="code" class="xml:nocontrols">  
+&lt;key
+            commandId="rcpmail.syncServer"
+            schemeId="rcpmail.key.scheme"
+      sequence="CTRL+T"&gt;
+&lt;/key&gt;
+</pre>
+    </div>
+        
+    <div class="slide" id="ActiveKeyBindings1">
+      <h1>Active Keybindings - active contexts</h1>
+    <ul>
+      <li>The IBindingService gets the active contexts from the IContextService.</li>
+      <li>The IBindingService treats the contexts like an active tree.</li>
+      <li>The IBindingService prunes the tree depending on which component has focus.</li>
+      <li>This allows the binding service to look up the parameterized command for a key sequence.</li>
+    </ul>
+      <img src="keyContexts.png" alt="context tree including dialogs and windows" />
+    </div>
+    
+    <div class="slide" id="ActiveKeyBindingsExample">
+      <h1>Keybindings in the mail App</h1>
+      <p>As with most applications, we want keybindings.  There is a choice to make:
+    <ul>
+      <li>Use the org.eclipse.ui.defaultAcceleratorConfiguration.  This makes all of the
+      default workbench keybindings available.</li>
+      <li>Create your own scheme, rcpmail.key.scheme.  This gives you control over
+      all of the keybindings in your application.</li>
+      </ul></p>
+      <p>The RCP mail app will use its own scheme to control the keybindings.  In this
+      case, it is advisable to copy over the 5 standard keybindings: cut, copy, paste,
+      select all, delete.</p>
+    </div>
+        
+    <div class="slide" id="Step 11: Exercise">
+      <h1>Exercise</h1>
+        <p>File/Exit and New Window commands</p>
+    </div>
+
+
+    <div class="slide" id="CNF - Adding Contacts Screenshot">
+      <h1>Common Navigator Framework</h1>
+      <p>Adding Contacts </p>
+      <p><img src="rcpmail-14.png" alt="" /></p>
+    </div>
+
+    <div class="slide" id="CNF - Adding Contacts">
+      <h1>CNF - Adding Contacts</h1>
+      <p>
+      <ol>
+      <li>Add contacts to existing RCP mail application.
+      <li>Base plugin unaware and unchanged.
+      <li>Need to hook to the population of the root of the model (the Model object).
+	  <li>New Navigator Content Extension is dynamically selected based on the wildcard in the viewer.      
+      </ol>
+      </p>
+    </div>
+
+    <div class="slide" id="CNF - What does it do?">
+      <h1>CNF - What does it do?</h1>
+      <p>
+      <ul>
+      <li><b>Dynamically</b>
+		<p>&nbsp;&nbsp;&nbsp;Determined at runtime based on expressions.</p>
+      </li>
+      <li><b>Hose together different collections of</b>
+        <p>&nbsp;&nbsp;&nbsp;Collections are not related or even known to each other.</p>
+      </li>
+      <li><b>Content</b>
+        <p>&nbsp;&nbsp;&nbsp;"Content" is content providers, label providers, sorters, filters, drag handler.</p>
+      </li>
+      </ul>
+      </p>
+    </div>
+
+    <div class="slide" id="CNF - Parts">
+      <h1>CNF - Parts</h1>
+      <p><b>CommonNavigator</b> - A ViewPart; the Project Explorer is an instance of the CommonNavigator.</p>
+      <p><b>CommonViewer</b> - A Viewer.</p>
+      <p><b>Navigator Content Extensions</b> - Declare wads of content that can be dynamically enabled.</p>
+      <p>These content extensions have user visible names and can be dynamically enabled/disabled
+      in the view context menu.</p>
+      <p><b>Resource Content Extensions</b> - A set of extensions in <code>org.eclipse.ui.navigator.resources</code> 
+      that provide the content for resources.</p>
+    </div>
+
+
+    <div class="slide" id="CNF - Implementations">
+      <h1>CNF - Implementations</h1>
+      <p><b>Project Explorer</b> - Main view of the workspace with other content built on resources. </p>
+      <p>Resource -> JDT, Resource -> CDT, Resource -> JDT -> WTP, etc.</p>
+      <p><b>Team Synchronization</b> - Uses the CNF to provide the different types of views, an example
+      of a new of the CNF on an alternate viewer.
+      <p><b>RCP Apps that use Resources</b> - Allows RCP model objects to be contributed.</p> 
+      <p><b>Large RCP Apps</b> - RCP apps that have many sets of content.</p> 
+    </div>
+
+    <div class="slide" id="CNF - Remaining Steps">
+      <h1>CNF - Remaining Steps</h1>
+      <p><b>Step 12</b> - Add the CNF to the basic rcpmail application replacing the viewer. </p>
+      <p><b>Step 13</b> - Add the rcpmail.contacts plugin that with the contacts model objects and
+      contact content/label providers.</p>
+      <p><b>Step 14 (Exercise)</b> - Add the extension to the rcpmail.contacts plugin hooking it to the CNF. </p>
+    </div>
+
+    <div class="slide" id="Step 12: TreeViewer -> CNF">
+    <!--  step 12  -->
+      <h1>Step 12: TreeViewer -> CNF</h1>
+      <p>Steps to change the TreeViewer to CNF:
+      <ol>
+        <li>Open PDE editor for manifest runtime tab, add new dependency: org.eclipse.ui.navigator.</li>
+        <li>Go to the extensions page and select the org.eclipse.ui.views->Mailboxes view.</li>
+        <li>Change the id to rcpmail.NavigatorView and the class to rcpmail.EditedCommonNavigator. We'll come back to it. Change the name to MailboxesCNF.</li>
+        <li>Change the allowMultiple property to false.</li>
+        <li>Add a new extension: org.eclipse.ui.navigator.viewer</li>
+        <li>Rightclick on it and select New->viewer. Change the viewerId to rcpmail.NavigatorView</li>
+        <li>Rightclick on the org.eclipse.ui.navigator.viewer extension and choose New->navigatorContentBinding. Change the viewerId to rcpmail.NavigatorView</li>
+        <li>Rightclick on it and choose New->(includes), rightclick on it, and select New->contentExtension</li>
+        <li>Change the pattern to rcpmail.* (this allows us to be extensible).</li>
+        <li>Add a new extension: org.eclipse.ui.navigator.navigatorContent.</li>
+        <li>Rightclick on it and choose New->navigatorContent</li>
+        <li>Change it's id to rcpmail.MailboxContent. Change it's name to MailboxContent.</li>
+        <li>Change the contentProvider to rcpmail.MailContentProvider</li>
+        <li>Change the labelProvider to rcpmail.NavigatorLabelProvider</li>
+        <li>Set priority to Normal and activeByDefault to True.</li>
+        <li>Rightclick the MailboxContent contentExtension and choose New->(enablement)</li>
+        <li>Rightclick on (enablement) and choose new instanceof.</li>
+        <li>Set the value to rcpmail.model.ModelObject.</li>
+        <li>Open the Perspective.java and create a new field: <code>private final String NAVIGATOR_ID = "rcpmail.NavigatorView";</code></li>
+        <li>Change the line: <code>layout.addStandaloneView(NavigationView.ID,  false, IPageLayout.LEFT, 0.25f, editorArea); to: layout.addStandaloneView(NAVIGATOR_ID,  true, IPageLayout.LEFT, 0.25f, editorArea);</code></li>
+        <li>Comment out the line:  //layout.getViewLayout(NavigationView.ID).setCloseable(false);</li>
+        <li>Copy MailLabelProvider to NavigatorLabelProvider.</li>
+        <li>In NavigatorLabelProvider, change the superclass to LabelProvider;</li>
+        <li>replace the constructor with a no-arg constructor;</li>
+        <li>and remove the reference to folder.getMessages(). </li>      
+        <li>At the MailboxesCNF view click on the class (new class wizard) to create a new class extending the CommonNavigator</li>
+        <li>Change the superclass to org.eclipse.ui.navigator.CommonNavigator then click Finish.</li>
+        <li>Now we have to override the getInitialInput() method of the CommonNavigator by adding this to our EditedCommonnavigator class: 
+<pre name="code" class="java:nocontrols">
+    protected IAdaptable getInitialInput() {
+        Model.getInstance();
+}
+</pre>
+       </li>
+        <li>Now you can run the plugin by rightclicking it and selecting Run as->Eclipse Application. You can see your brand new CommonNavigator view on the left side with the dummy servers listed.</li>
+      </ol>
+      </p>
+    </div>
+
+
+    <div class="slide" id="Step 13: Adding Contacts using the CNF">
+      <h1>Step 13: Adding rcpmail.contacts plugin</h1>
+ 	<ol>
+      <li>Add model objects for Contacts and Contact.</li>
+      <li>Add content provider ContactsContentProvider:
+      <p><code>getElements()</code> returns the Contacts header when it sees the Model object
+<pre name="code" class="java:nocontrols">
+public Object[] getElements(Object inputElement) {
+	if (inputElement == Model.getInstance()) {
+		return new Object[] { Contacts.getInstance() };
+	}
+	return null;
+}
+</pre>
+
+      </p>
+      <p><code>getParent()</code> returns:
+<pre name="code" class="java:nocontrols">
+if (element instanceof Contact)
+	return Contacts.getInstance();
+if (element instanceof Contacts)
+	return Model.getInstance();
+}
+</pre>
+      </p>
+      </li>
+      <li>Add label provider ContactsLabelProvider.</li>
+    </div>
+
+
+    <div class="slide" id="Step 14: Exercise">
+      <h1>Step 14: Exercise</h1>
+      <p><b>Hooking rcpmail.contacts plugin to the CNF</b></p>
+      <p>Steps to add the navigator content extention to the rcpmail.contacts plugin
+        <ol>
+        <li>Add a new extension: org.eclipse.ui.navigator.navigatorContent.</li>
+        <li>Rightclick on it and choose New->navigatorContent</li>
+        <li>Change it's id to rcpmail.ContactsContent. Change it's name to Contacts Content.</li>
+        <li>Change the contentProvider to rcpmail.contacts.ContactsContentProvider</li>
+        <li>Change the labelProvider to rcpmail.contacts.ContactsLabelProvider</li>
+        <li>Set activeByDefault to True.</li>
+        <li>Rightclick the ContactsContent contentExtension and choose New->(enablement)</li>
+        <li>Rightclick on (enablement) and choose new or.</li>
+        <li>Rightclick on (or) and choose new instanceof.</li>
+        <li>Set the value to rcpmail.model.Model.</li>
+        <li>Rightclick on (or) and choose new instanceof.</li>
+        <li>Set the value to rcpmail.contacts.model.Contacts.</li>
+        <li>Rightclick on (or) and choose new instanceof.</li>
+        <li>Set the value to rcpmail.contacts.model.Contact.</li>
+      </ol>
+      </p>
+    </div>
+
+
+
+
+    
+    
+    
+    <div class="slide" id="Acknowledgements">
+      <h1>Acknowledgements</h1>
+      <p>This presentation uses the <a href="http://goessner.net/articles/slideous/">
+      Slideous</a> package by Prof. Stefan G&ouml;ssner, licensed under the 
+      <a href="http://creativecommons.org/licenses/LGPL/2.1/">
+      GNU LGPL License 2.1</a>. </p>
+    </div>
+    
+        
+    <div class="slide newpage" id="External Links">
+      <h1>External Links</h1>
+      <p>This section lists all hyperlinks included in the presentation.
+      When printing HTML, usually only the blue and underlined hyperlinks 
+      are shown and the targets of all hyperlinks are "lost".  
+      This handout, when printed (only!), includes a number like a footnote (e.g. 
+      [123]) after each hyperlink to refer to the following list of targets.</p>
+      <p id="linklist" class="NOTincremental"/>
+    </div>
+
+    <!-- SyntaxHighlighter CSS and JavaScript -->
+    <link type="text/css" rel="stylesheet" href="dp.SyntaxHighlighter/Styles/SyntaxHighlighter.css"/>
+    <script language="javascript" src="dp.SyntaxHighlighter/Scripts/shCore.js"></script>
+    <script language="javascript" src="dp.SyntaxHighlighter/Scripts/shBrushJava.js"></script>
+    <script language="javascript" src="dp.SyntaxHighlighter/Scripts/shBrushXml.js"></script>
+    <script language="javascript">  
+        dp.SyntaxHighlighter.ClipboardSwf = 'dp.SyntaxHighlighter/Scripts/clipboard.swf';  
+        dp.SyntaxHighlighter.HighlightAll('code');  
+    </script>  
+                 
+  </body>
+</html>

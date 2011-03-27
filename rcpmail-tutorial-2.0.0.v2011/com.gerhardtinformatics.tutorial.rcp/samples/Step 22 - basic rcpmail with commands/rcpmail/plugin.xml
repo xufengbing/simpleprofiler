@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="rcpmail.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RCP Perspective"
+            class="rcpmail.Perspective"
+            id="rcpmail.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Message"
+            allowMultiple="true"
+            icon="icons/sample2.gif"
+            class="rcpmail.View"
+            id="rcpmail.view">
+      </view>
+      <view
+            name="Mailboxes"
+            allowMultiple="true"
+            icon="icons/sample3.gif"
+            class="rcpmail.NavigationView"
+            id="rcpmail.navigationView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Mail"
+            id="rcpmail.category">
+      </category>
+      <command
+            name="Open Mailbox"
+            description="Opens a mailbox"
+            categoryId="rcpmail.category"
+            id="rcpmail.open">
+      </command>
+      <command
+            categoryId="rcpmail.category"
+            defaultHandler="rcpmail.handlers.OpenMessageDialogHandler"
+            description="Open a message dialog"
+            id="rcpmail.openMessage"
+            name="Open Message Dialog">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.ExitHandler"
+            id="rcpmail.exit.command"
+            name="Exit Command">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.OpenNewWindowHandler"
+            id="rcpmail.openNewWindowCommand"
+            name="Open New Window Command">
+      </command>
+      <command
+            defaultHandler="rcpmail.handlers.OpenAnotherMessageViewHandler"
+            id="rcpmail.openAnotherMessageViewCommand"
+            name="Open another message view command">
+      </command>
+      <command
+            defaultHandler="org.eclipse.ui.internal.about.AboutHandler"
+            id="rcpmail.aboutboxCommand"
+            name="Aboutbox Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="rcpmail.openAnotherMessageViewCommand"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+2">
+      </key>
+      <key
+            commandId="rcpmail.openMessage"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+3">
+      </key>
+      <key
+            commandId="rcpmail.exit.command"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+X">
+      </key>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="rcpmail.application"
+            name="RCP Product">
+         <property
+               name="aboutText"
+               value="RCP Mail template created by PDE">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/sample2.gif">
+         </property>
+         <property
+               name="aboutImage"
+               value="product_lg.gif">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="fileMenu"
+               label="File">
+            <command
+                  commandId="rcpmail.openNewWindowCommand"
+                  label="Open In New Window Command"
+                  style="push">
+            </command>
+            <separator
+                  name="rcpmail.separator1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="rcpmail.openMessage"
+                  icon="icons/sample3.gif"
+                  label="Open Message Dialog Command"
+                  style="push">
+            </command>
+            <command
+                  commandId="rcpmail.openAnotherMessageViewCommand"
+                  icon="icons/sample2.gif"
+                  label="Open Another Message Command"
+                  style="push">
+            </command>
+            <separator
+                  name="rcpmail.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="rcpmail.exit.command"
+                  label="Exit Command"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               id="helpMenu"
+               label="Help">
+            <command
+                  commandId="rcpmail.aboutboxCommand"
+                  label="About RCP Product Command"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="rcpmail.toolbar2">
+            <command
+                  commandId="rcpmail.openAnotherMessageViewCommand"
+                  icon="icons/sample2.gif"
+                  label="Open another message view"
+                  style="push">
+            </command>
+            <command
+                  commandId="rcpmail.openMessage"
+                  icon="icons/sample3.gif"
+                  label="Open message dialog"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>

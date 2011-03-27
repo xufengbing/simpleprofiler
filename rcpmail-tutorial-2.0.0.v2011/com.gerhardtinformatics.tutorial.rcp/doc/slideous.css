@@ -1,0 +1,135 @@
+/*	This work is licensed under Creative Commons GNU LGPL License.
+
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+	Version: 1.0
+
+	Author:  Stefan Goessner/2005
+	Web:     http://goessner.net/
+*/
+@media screen, projection {
+body {
+	margin: 0;
+	padding: 0;
+	background-color: White;
+	border-bottom-color: #667788;
+	border-left-color: #667788;
+	border-top-color: #667788;
+	color: #113322;
+	border-right-color: #667788;
+    font-size: 125%;
+}
+#statusbar {
+  display: none;
+  position: absolute; z-index: 10;
+  top: auto; bottom: 0; left: 0; right: 0;
+  height: 2em;
+  background-color: #ffffff;
+  color: #132;
+  font-size: 75% !important;
+  padding: 0.5em 0.5em 0 2px;
+  border-top: solid 1px #000;
+}
+#statusbar button, #tocbox {
+  cursor: pointer;
+  color: #0;
+  background-color: #ffffff;
+  margin: 1px;
+  padding: 0 0.5em;
+  border: inset 1px black;
+}
+#statusbar button:hover, #tocbox:hover {
+  color: #000;
+  background-color: #ced6e4;
+  border: outset 1px black;
+}
+#tocbox {
+  width: 15em;
+}
+#eos {
+  visibility: hidden;
+  color: #021;
+  background-color: #fffafa;
+  border: inset 1px black;
+  font-size: 120%;
+}
+div.slide {
+   display: block;
+   margin: 0 0 1em 0;
+   padding: 0 100px;
+   font-size: 150%
+}
+
+div.slide h1 {
+  background: url(efe2009-half.png) no-repeat 99% 50%;
+  color: #0;
+  padding: 0 0.5em 0 0.5em;
+  margin: 0 -100px;
+  font-size: 150%;
+  border-bottom: solid 1px black;
+}
+
+.footnote {
+  display: none;
+}
+	
+div.slide h1:before { content: " "; }
+div.handout { display: block; }
+
+body>#statusbar {   /* ie6 hack for fixing the statusbar - in quirks mode */
+  position: fixed;  /* thanks to Anne van Kesteren and Arthur Steiner */
+}                   /* see http://limpid.nl/lab/css/fixed/footer */
+* html body {
+  overflow: hidden;
+}
+* html div.slide {
+  height: 100%;
+  padding-bottom: 2em;
+  overflow: auto;
+}                   /* end ie6-hack */
+
+img { 
+	max-width: 800px; 
+}
+	
+object { 
+	width: 800px; 
+}
+
+.leftimage {
+	float: left; 
+	height: 80%; 
+	margin-right: 30px; 
+	margin-bottom: 30px	
+}
+
+.printonly {
+	display: none
+}
+		
+} /* @media screen, projection */
+
+@media print {
+body {
+  color: black;
+  font-family: sans-serif;
+  font-size: 11pt;
+}
+
+#statusbar { display: none; }
+div.slide.newpage { page-break-before: always; }
+div.handout { display: block; }
+
+img { 
+	max-width: 100%; 
+}
+
+h1 {
+	clear: both;
+}
+
+.leftimage {
+	float: left; 
+	margin-right: 30px; 
+	margin-bottom: 30px
+}
+} /* @media print */
