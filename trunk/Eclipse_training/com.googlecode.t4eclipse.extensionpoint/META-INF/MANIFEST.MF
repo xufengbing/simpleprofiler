@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: T4eclipse
+Bundle-SymbolicName: com.googlecode.t4eclipse.extensionpoint;singleton:=true
+Bundle-Version: 1.3
+Bundle-Activator: com.googlecode.t4eclipse.T4EclipseActivator
+Bundle-Vendor: Ben Xu
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: com.googlecode.t4eclipse.extension
