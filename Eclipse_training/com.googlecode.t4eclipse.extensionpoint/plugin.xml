@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="item" name="item" schema="schema/item.exsd"/>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="com.googlecode.t4eclipse.view.T4EclipseContentView"
+            id="com.googlecode.t4eclipse.contentview"
+            name="T4Eclipse"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>

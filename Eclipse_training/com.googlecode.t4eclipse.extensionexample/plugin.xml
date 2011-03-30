@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com.googlecode.t4eclipse.extensionpoint.item">
+      <Item
+            class="com.googlecode.t4eclipse.demo.content.RootListContentExample"
+            id="listroot"
+            label="ListExample">
+      </Item>
+      <Item
+            class="com.googlecode.t4eclipse.demo.content.SubListContentExample"
+            id="sublist"
+            label="SubListExample"
+            pid="listroot">
+      </Item>
+      
+      
+      
+   </extension>
+
+</plugin>
