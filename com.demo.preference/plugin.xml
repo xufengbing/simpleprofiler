@@ -16,5 +16,35 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.demo.preference.demo.PreferenceDemoPage"
+            id="com.demo.preference.demo1"
+            name="DemoPreference">
+      </page>
+      <page
+            category="com.demo.preference.demo1"
+            class="com.demo.preference.demo.PreferenceDemoPage"
+            id="com.demo.preference.demo1.sub"
+            name="DemoPreferenceSub">
+      </page>
+      <page
+            class="com.demo.preference.preferences.SamplePreferencePage"
+            id="com.demo.preference.preferences.SamplePreferencePage"
+            name="Sample Preferences">
+      </page>
+   </extension>
+
+
+ <!--  <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.demo.preference.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+   -->
+
 
 </plugin>
