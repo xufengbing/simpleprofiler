@@ -10,6 +10,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PlatformUI;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -20,8 +21,7 @@ public class AddPerpertyChangeListener implements
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
-	}
+ 	}
 
 	@Override
 	public void init(IWorkbenchWindow window) {
