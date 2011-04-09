@@ -37,14 +37,13 @@
    </extension>
 
 
- <!--  <extension
+ <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
             class="com.demo.preference.preferences.PreferenceInitializer">
       </initializer>
    </extension>
 
-   -->
 
 
 </plugin>
