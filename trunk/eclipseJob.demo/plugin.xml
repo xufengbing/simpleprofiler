@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="eclipseJob.demo.jobactions"
+            label="Job Actions"
+            visible="true">
+         <menu
+               id="eclipseJob.demo.menus"
+               label="&amp;JobDemo">
+            <separator
+                  name="actions">
+            </separator>
+         </menu>
+         <action
+               class="eclipsejob.demo.ScheduleJob"
+               id="eclipseJob.demo.action.ScheduleJob"
+               label="ScheduleJob"
+               menubarPath="eclipseJob.demo.menus/actions"
+               style="push">
+         </action>
+         <action
+               class="eclipsejob.demo.FamilyJob"
+               id="eclipseJob.demo.action.FamilyJob"
+               label="FamilyJob"
+               menubarPath="eclipseJob.demo.menus/actions"
+               style="push">
+         </action>
+         <action
+               class="eclipsejob.demo.LongJob"
+               id="eclipseJob.demo.action.longJob"
+               label="LongJob"
+               menubarPath="eclipseJob.demo.menus/actions"
+               style="push">
+         </action>
+         <action
+               class="eclipsejob.demo.SimpleJob"
+               id="eclipseJob.demo.action.simpleJob"
+               label="SimpleJob"
+               menubarPath="eclipseJob.demo.menus/actions"
+               style="push">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>
