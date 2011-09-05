@@ -8,7 +8,7 @@
     # server part is a stand alone java process which receive messages from client part 
 
 
-= Client Part Protocol =
+=== Client Part Protocol ===
 Client part can send the message to Server in the following format:
   * {{{"#<pid>.<class>.<method>.<methodPara>_<time>"}}}
     # pid:  process id of the method being executed
@@ -19,13 +19,12 @@ Client part can send the message to Server in the following format:
       # "{int}" one para int.
     # time: method execution time in milliseconds. 
  
-= Server Part =
+Client part can also receive message from server side,these message are configurations and commands with special character. 
+
+=== Server Part ===
+
 
 
  
 
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ 
