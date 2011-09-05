@@ -1,0 +1,31 @@
+#labels design
+SimpleProfiler contains 2 part. 
+  * Client part
+    # client part stays with in the process where the java application is profiled. 
+    # client part provide a single public API which can be invoked by the java program under profile. 
+    # the single public API will be invoked and send the information to the server part 
+  * Server part
+    # server part is a stand alone java process which receive messages from client part 
+
+
+= Client Part Protocol =
+Client part can send the message to Server in the following format:
+  * "#<pid>.<class>.<method>.<methodPara>_<time>"
+    # pid:  process id of the method being executed
+    # class: full class name
+    # method: method name
+    # methodPara: method para string
+      # for example , "{}" means no para
+      # "{int}" one para int.
+    # time: method execution time in milliseconds. 
+ 
+= Server Part =
+
+
+ 
+
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
