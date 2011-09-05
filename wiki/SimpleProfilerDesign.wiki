@@ -10,7 +10,7 @@ SimpleProfiler contains 2 part.
 
 = Client Part Protocol =
 Client part can send the message to Server in the following format:
-  * "#<pid>.<class>.<method>.<methodPara>_<time>"
+  * {{{"#<pid>.<class>.<method>.<methodPara>_<time>"}}}
     # pid:  process id of the method being executed
     # class: full class name
     # method: method name
