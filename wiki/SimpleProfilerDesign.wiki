@@ -1,5 +1,5 @@
 #labels design
-SimpleProfiler contains 2 part. 
+{{{SimpleProfiler contains 2 part.}}}
   * Client part
     # client part stays with in the process where the java application is profiled. 
     # client part provide a single public API which can be invoked by the java program under profile. 
