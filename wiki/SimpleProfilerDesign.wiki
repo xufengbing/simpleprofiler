@@ -1,11 +1,33 @@
 #labels design
-{{{SimpleProfiler contains 2 part.}}}
-  * Client part
+
+
+=== What is  Simple Profiler===
+Simple Profiler is a java profiler tool which is used to profile run time java application. 
+
+  * Simple Profiler aims to provide an easy way to analyze exectued methods  based on method run. 
+    # for one example, simple profiler can be used to find :  In one certain running java application, from time A to time B, log all methods run, and analyze which methods takes more time than others. 
+
+
+=== 3 Parts ===
+Simple Profiler contains 3 part.
+
+====Compile time instrumentor====
+    # compile time weaver is used to instrument java class bytecode file under priofile. After instrument. Certain hook API is added into bytecode which invokes client part API. 
+    # Compile time instrumentor does its isntrument work BEFORE java run time. The instrumentor should be able to instrument class file and jar file. 
+
+====Client part ====
     # client part stays with in the process where the java application is profiled. 
     # client part provide a single public API which can be invoked by the java program under profile. 
+    # Java program under profile must be able to access client part API. 
+      # {{{SimpleProfier}}} uses java extension class loader mechanism to let java program under profile be able to access the client part API. 
+      # which means we put the client part class file under certain dir in JRE (/bin/classes)
     # the single public API will be invoked and send the information to the server part 
-  * Server part
-    # server part is a stand alone java process which receive messages from client part 
+    # client part is also capable of recieve message from server part. Such message is certain configuration or command send from server side. (for example to start/stop logging, to start log method start and end, etc...)
+
+====Server part====
+    # server part is a stand alone java process which receive messages from client part and present these message in certain format after analyze.
+    # server part should contain GUI for user to easily input their detail requirement. 
+    # In {{{SimpleProfiler}}}, Server part chould be an eclipse UI plug-in, or a standalone RCP, or just a standalone java GUI application. 
 
 
 === Client Part Protocol ===
